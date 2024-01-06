@@ -1,8 +1,12 @@
-import { Counter } from "./features/counter/Counter";
-
+import React from "react";
+import { store } from "./app/store";
+import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/configRouter.jsx";
 export default function App() {
-
-  return <><h1 className="text-4xl font-bold underline">Hello world!</h1>;
-  <Counter></Counter>
-  </>
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
