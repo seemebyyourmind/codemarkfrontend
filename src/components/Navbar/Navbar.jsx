@@ -2,8 +2,8 @@ import brand from "../assets/petbrand.svg";
 import { Link } from "react-router-dom";
 
 import { useState } from "react";
-import CartPopup from "./CartPopup";
-import NotificationPopup from "./NotificationPopup";
+import CartPopup from "../Popup/CartPopup";
+import NotificationPopup from "../Popup/NotificationPopup";
 
 export default function Navbar() {
   const [isNotificationPopupOpen, setNotificationPopupOpen] = useState(false);
@@ -26,13 +26,13 @@ export default function Navbar() {
   };
 
   return (
-    <div className="flex flex-row px-16 ">
+    <div className="flex flex-row ">
       <div className="w-1/5 flex flex-row justify-center">
         <img src={brand} />
         <h1 className="self-center">PETHUB.COM</h1>
       </div>
 
-      <div className=" search self-center w-3/5 flex flex-row ">
+      <div className=" search self-center w-1/2 flex flex-row ">
         <form className="flex items-center w-full mx-3 ">
           <label htmlFor="search-dropdown" className="sr-only">
             Search
@@ -82,8 +82,11 @@ export default function Navbar() {
           </button>
         </form>
       </div>
-      <div className="w-1/5 flex flex-row justify-around self-center ">
-        <Link className="text-xs flex flex-row items-center  hover:bg-orange-400 px-3 py-1 rounded-md">
+      <div className="w-[30%] flex flex-row justify-around self-center font-medium">
+        <Link
+          to={"/login"}
+          className="text-xs flex flex-row items-center  hover:bg-orange-400 hover:text-white px-3 py-1 rounded-md"
+        >
           <div className="flex flex-col">
             {" "}
             <span>Đăng nhập</span>
@@ -104,7 +107,7 @@ export default function Navbar() {
         </Link>
         <Link
           to="/cart"
-          className="relative text-xs hover:bg-orange-400 px-3 py-1 rounded-md"
+          className="relative text-xs hover:bg-orange-400 px-3 py-1 rounded-md hover:text-white"
           onMouseEnter={handleCartMouseEnter}
           onMouseLeave={handleCartMouseLeave}
         >
@@ -128,7 +131,7 @@ export default function Navbar() {
           to={"/productpage"}
           onMouseEnter={handleNotificationMouseEnter}
           onMouseLeave={handleNotificationMouseLeave}
-          className="text-xs mr-4 relative hover:bg-orange-400 px-3 py-1 rounded-md"
+          className="text-xs mr-4 relative hover:bg-orange-400 px-3 py-1 rounded-md hover:text-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
