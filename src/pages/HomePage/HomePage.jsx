@@ -17,6 +17,9 @@ export default function Homepage() {
           <li>
             <Link to={`productpage`}> productpage</Link>
           </li>
+          <li>
+            <Link to={`profilepage`}> productpage</Link>
+          </li>
         </ul>
         <Outlet />
       </div>

@@ -1,13 +1,18 @@
-import brand from "../assets/petbrand.svg";
+import brand from "../../assets/petbrand.svg";
 import { Link } from "react-router-dom";
 
 import { useState } from "react";
 import CartPopup from "../Popup/CartPopup";
 import NotificationPopup from "../Popup/NotificationPopup";
 
+import { useSelector } from "react-redux";
+
+import { selectAuth } from "../../features/auth/authSlice";
+
 export default function Navbar() {
   const [isNotificationPopupOpen, setNotificationPopupOpen] = useState(false);
   const [isCartPopupOpen, setCartPopupOpen] = useState(false);
+  const { isLoggedIn } = useSelector(selectAuth);
 
   const handleNotificationMouseEnter = () => {
     setNotificationPopupOpen(true);
@@ -83,28 +88,55 @@ export default function Navbar() {
         </form>
       </div>
       <div className="w-[30%] flex flex-row justify-around self-center font-medium">
-        <Link
-          to={"/login"}
-          className="text-xs flex flex-row items-center  hover:bg-orange-400 hover:text-white px-3 py-1 rounded-md"
-        >
-          <div className="flex flex-col">
-            {" "}
-            <span>Đăng nhập</span>
-            <span>Đăng ký</span>
-          </div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6 mx-auto"
+        {isLoggedIn ? (
+          <Link
+            to={"/profilepage"}
+            className="text-xs flex flex-row items-center  hover:bg-orange-400 hover:text-white px-3 py-1 rounded-md"
           >
-            <path
-              fillRule="evenodd"
-              d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </Link>
+            <div className="flex flex-col">
+              {" "}
+              <span>Cá nhân</span>
+            </div>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6 mx-auto"
+            >
+              <path
+                fillRule="evenodd"
+                d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </Link>
+        ) : (
+          <Link
+            to={"/login"}
+            className="text-xs flex flex-row items-center  hover:bg-orange-400 hover:text-white px-3 py-1 rounded-md"
+          >
+            <div className="flex flex-col">
+              {" "}
+              <span>Đăng nhập</span>
+              <span>Đăng ký</span>
+            </div>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6 mx-auto"
+            >
+              <path
+                fillRule="evenodd"
+                d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </Link>
+        )}
+
         <Link
           to="/cart"
           className="relative text-xs hover:bg-orange-400 px-3 py-1 rounded-md hover:text-white"

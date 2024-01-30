@@ -1,5 +1,5 @@
-import Banner from "../../components/Banner";
-import ProductPart from "../../components/ProductPart";
+import Banner from "../../components//Banner/Banner";
+import ProductPart from "../../components/Products/ProductPart";
 const ProductPage = () => {
   const productImageUrl = "src/assets/cat-brand.jpg";
   const productDescription = "Mô tả sản phẩm của bạn ở đây.";

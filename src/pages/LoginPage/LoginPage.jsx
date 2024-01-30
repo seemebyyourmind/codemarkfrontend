@@ -1,7 +1,88 @@
 import { Link } from "react-router-dom";
 import { FaGooglePlus } from "react-icons/fa";
-
+import { useState } from "react";
+import { loginUserAsync } from "../../features/auth/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout, selectAuth } from "../../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const { isLoggedIn, user } = useSelector(selectAuth);
+  const navigate = useNavigate();
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
+    if (e.target.value.length < 8) {
+      setPhoneError("Số điện thoại chưa hợp lệ");
+    } else {
+      setPhoneError("");
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (e.target.value.length < 8) {
+      setPasswordError("Mật khẩu ít nhất 8 ký tự");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (phone && phoneError === "" && password && passwordError === "") {
+      const result = await dispatch(loginUserAsync(phone, password));
+      if (result.status === "sucess") {
+        navigate("/");
+        console.log("redirect");
+      } else if (result.status === "wrong password") {
+        setPasswordError("mật khẩu không đúng");
+      } else if (result.status === "phone not exist") {
+        setPhoneError("số điện thoại chưa được đăng ký");
+      } else {
+        alert("có lỗi xảy ra");
+      }
+    }
+  };
+
+  // const login = () => async (dispatch) => {
+  //   try {
+  //     console.log(phone, password);
+  //     // Gửi dữ liệu đăng ký đến server
+  //     const response = await fetch("http://localhost:3001/api/user/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ phone, password }),
+  //     });
+  //     // Xử lý kết quả từ server (nếu cần)
+  //     const result = await response.json();
+  //     console.log(result.status);
+  //     if (result.status === "sucess") {
+  //       dispatch(
+  //         login({
+  //           user: result.user,
+  //           access_token: result.access_token,
+  //           refresh_token: result.refresh_token,
+  //         })
+  //       );
+  //     } else if (result.status === "wrong password") {
+  //       setPasswordError("mật khẩu không đúng");
+  //     } else if (result.status === "phone not exist") {
+  //       setPhoneError("số điện thoại chưa được đăng ký");
+  //     } else {
+  //       alert("có lỗi xảy ra");
+  //     }
+  //     console.log("result", result);
+  //   } catch (error) {
+  //     console.error("Error registering:", error);
+  //   }
+  // };
   return (
     <div className="bg-gray-200 min-h-screen flex items-center justify-center">
       <div className="bg-orange-100 p-8 rounded-lg shadow-md flex items-center ">
@@ -11,21 +92,24 @@ const LoginPage = () => {
           alt="hoangpham"
         />
         <div className="w-1/2 ml-8">
-          <h2 className="text-3xl font-semibold mb-4">Login</h2>
-          <form>
+          <h2 className="text-3xl font-semibold mb-4">Đăng nhập </h2>
+          <form onSubmit={handleSubmit}>
             {/* Your login form goes here */}
             <div className="mb-4">
               <label
                 htmlFor="username"
                 className="block text-sm font-medium text-gray-700"
               >
-                Username:
+                Số điện thoại
+                {phoneError && <p style={{ color: "red" }}>{phoneError}</p>}
               </label>
               <input
                 type="text"
                 id="username"
                 name="username"
-                placeholder="Username"
+                value={phone}
+                onChange={handlePhoneChange}
+                placeholder="Số điện thoại"
                 className="mt-1 p-2 w-full border rounded-md"
               />
             </div>
@@ -34,24 +118,29 @@ const LoginPage = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Password:
+                Mật khẩu:{" "}
+                {passwordError && (
+                  <p style={{ color: "red" }}>{passwordError}</p>
+                )}
               </label>
               <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Mật khẩu"
+                value={password}
+                onChange={handlePasswordChange}
                 className="mt-1 p-2 w-full border rounded-md"
               />
             </div>
             <input type="checkbox" id="rememberMe" name="rememberMe" />
-            <label htmlFor="rememberMe">Remember me</label>
+            <label htmlFor="rememberMe">Nhớ mật khẩu</label>
             <br />
             <button
               type="submit"
               className="flex flex-row bg-orange-300 text-white py-2 px-4 rounded-md justify-center mx-auto hover:bg-orange-500"
             >
-              Login now
+              Đăng nhập ngay
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -68,7 +157,7 @@ const LoginPage = () => {
               </svg>
             </button>
             <p>
-              Don&apos;t have an account?. <Link to={"/signup"}>Signup</Link>
+              Chưa có tài khoản <Link to={"/signup"}>Đăng ký</Link>
             </p>
             <div className="flex flex-row justify-around ">
               <svg
@@ -108,7 +197,7 @@ const LoginPage = () => {
             to={"/googlelogin"}
             className="flex flex-row bg-orange-300 text-white py-2 px-4 rounded-md justify-center mx-auto w-[250px] hover:bg-orange-500"
           >
-            <span className="mx-2">Login with GOOGLE</span>
+            <span className="mx-2">Đăng nhập với GOOGLE</span>
             <FaGooglePlus className=" w-8 h-8" />
           </Link>
         </div>

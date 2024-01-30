@@ -1,4 +1,5 @@
 import { FaShoppingCart } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 const OrderPage = () => {
   return (
@@ -22,9 +23,9 @@ const OrderPage = () => {
 
             <div className="py-4 col-span-2 border-b-2"> Item 1</div>
             <div className="py-4 border-b-2">Phân loại A</div>
-            <div className="py-4 border-b-2">$20.00</div>
+            <div className="py-4 border-b-2">20000</div>
             <div className="py-4 border-b-2">2</div>
-            <div className="py-4 border-b-2">$40.00</div>
+            <div className="py-4 border-b-2">40000</div>
             <div className="py-4 text-red-500 cursor-pointer flex flex-row border-b-2">
               <div>Xóa</div>
               <div>Mua sau</div>
@@ -32,9 +33,9 @@ const OrderPage = () => {
 
             <div className="col-span-2">Item 1</div>
             <div>Phân loại A</div>
-            <div>$20.00</div>
+            <div>20000</div>
             <div>2</div>
-            <div>$40.00</div>
+            <div>40000</div>
             <div className="text-red-500 cursor-pointer">Xóa</div>
           </div>
         </div>
@@ -44,23 +45,23 @@ const OrderPage = () => {
           </div>
           <div className="flex flex-row justify-between ">
             <div className="px-4 py-4">Loại sản phẩm</div>
-            <div className="px-4 py-4">1</div>
+            <div className="px-4 py-4">2</div>
           </div>
           <div className="flex flex-row justify-between">
             <div className="px-4 py-4">Số sản phẩm</div>
-            <div className="px-4 py-4">3</div>
+            <div className="px-4 py-4">4</div>
           </div>
           <div className="flex flex-row justify-between ">
             <div className="px-4 py-4">Thành tiền</div>
-            <div className="px-4 py-4">222111</div>
+            <div className="px-4 py-4">80000</div>
           </div>
           <div className="flex flex-row justify-between">
             <div className="px-4 py-4"> Phí giao hàng</div>
-            <div className="px-4 py-4">312222</div>
+            <div className="px-4 py-4">20000</div>
           </div>
           <div className="flex flex-row justify-between border-white border-b-2 mb-3 ">
             <div className="px-4 py-4"> Tổng chi phí</div>
-            <div className="px-4 py-4">3000000</div>
+            <div className="px-4 py-4">100000</div>
           </div>
           <Link
             to={"/thanhtoan"}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import ImageSlider from "../images/ImageSlider";
+import ImageSlider from "../../images/ImageSlider";
 
 const PetProductDetail = () => {
   const images = [

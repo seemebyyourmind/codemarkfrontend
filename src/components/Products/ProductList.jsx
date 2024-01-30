@@ -1,4 +1,5 @@
-import PetProductCard from "./PetProductCart";
+import PetProductCard from "./PetProduct/PetProductCart";
+import StuffProductCard from "./StuffProduct/StuffProductCart";
 const ProductList = () => {
   const dogProduct = {
     type: "dog",
@@ -26,6 +27,9 @@ const ProductList = () => {
         <PetProductCard {...dogProduct} />
         <PetProductCard {...dogProduct} />
         <PetProductCard {...catProduct} />
+        <StuffProductCard {...dogProduct}></StuffProductCard>
+        <StuffProductCard {...catProduct}></StuffProductCard>
+        <StuffProductCard {...dogProduct}></StuffProductCard>
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
-import PetProductDetail from "./PetProductDetail";
-import ProductList from "../ProductList";
+import PetProductDetail from "./PetProduct/PetProductDetail";
+import StuffProductDetail from "./StuffProduct/StuffProductDetail";
+import ProductList from "./ProductList";
 import ProductType from "./ProductType";
 const ProductPart = () => {
-  const state = false;
+  const state = true;
   const type = ["hoang", "pham"];
   const product = ["hoang", "pham", "mtp"];
   return (
@@ -11,7 +12,7 @@ const ProductPart = () => {
       {state ? (
         <ProductList product={product}></ProductList>
       ) : (
-        <PetProductDetail />
+        <StuffProductDetail />
       )}
     </div>
   );
