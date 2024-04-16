@@ -19,7 +19,7 @@ const ImageSlider = ({ images }) => {
         <img
           src={images[currentImage]}
           alt={`Image ${currentImage + 1}`}
-          className="w-[512px] h-auto rounded-[20px]"
+          className="w-[512px] h-[350px] rounded-[20px]"
         />
         <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-between">
           <button

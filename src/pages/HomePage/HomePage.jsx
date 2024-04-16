@@ -10,17 +10,7 @@ export default function Homepage() {
         <hr />
         <SubNav />
         <hr />
-        <ul>
-          <li>
-            <Link to={`orderpage`}> orderpage</Link>
-          </li>
-          <li>
-            <Link to={`productpage`}> productpage</Link>
-          </li>
-          <li>
-            <Link to={`profilepage`}> productpage</Link>
-          </li>
-        </ul>
+
         <Outlet />
       </div>
     </>

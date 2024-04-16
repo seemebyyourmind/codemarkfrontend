@@ -1,8 +1,10 @@
+import { Outlet } from "react-router-dom";
 import Banner from "../../components//Banner/Banner";
-import ProductPart from "../../components/Products/ProductPart";
+
 const ProductPage = () => {
   const productImageUrl = "src/assets/cat-brand.jpg";
-  const productDescription = "Mô tả sản phẩm của bạn ở đây.";
+  const productDescription =
+    "Pethub.com là nền tảng mua sắm trực tuyến đáng tin cậy, kết nối người yêu thú cưng với thú cưng chất lượng và vật phẩm chăm sóc đa dạng, tạo nên một cộng đồng sôi động và hỗ trợ.";
 
   return (
     <div>
@@ -10,7 +12,9 @@ const ProductPage = () => {
         imageUrl={productImageUrl}
         description={productDescription}
       ></Banner>
-      <ProductPart></ProductPart>
+      <div className="flex flex-row mt-8 ">
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -2,12 +2,18 @@ import { Link } from "react-router-dom";
 import { FaGooglePlus } from "react-icons/fa";
 import { useState } from "react";
 import { loginUserAsync } from "../../features/auth/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { login, logout, selectAuth } from "../../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+// import { login, logout, selectAuth } from "../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { getCart } from "../../services/cartApi";
+
+import {
+  updatePetCartOnLoginSuccess,
+  updateStuffCartOnLoginSuccess,
+} from "../../features/cart/cartSlice";
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, user } = useSelector(selectAuth);
+  // const { isLoggedIn, user } = useSelector(selectAuth);
   const navigate = useNavigate();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -37,8 +43,12 @@ const LoginPage = () => {
     if (phone && phoneError === "" && password && passwordError === "") {
       const result = await dispatch(loginUserAsync(phone, password));
       if (result.status === "sucess") {
+        const cartdata = await getCart(result.user.id);
+        console.log(cartdata);
+
+        dispatch(updatePetCartOnLoginSuccess(cartdata.pets));
+        dispatch(updateStuffCartOnLoginSuccess(cartdata.petProduct));
         navigate("/");
-        console.log("redirect");
       } else if (result.status === "wrong password") {
         setPasswordError("mật khẩu không đúng");
       } else if (result.status === "phone not exist") {

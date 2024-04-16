@@ -1,29 +1,34 @@
 import PetProductCard from "./PetProduct/PetProductCart";
 // import StuffProductCard from "./StuffProduct/StuffProductCart";
-import { getPet } from "../../services/productApi";
-import { useParams } from "react-router-dom";
+import { getPetBySpecies, getPetByBreed } from "../../services/productApi";
+
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const ProductList = () => {
-  const { specieid } = useParams();
+const PetProductList = () => {
+  const { specieid, id } = useParams();
+
   const [type, setType] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Gọi hàm getPetBreed với async/await để đợi kết quả
-        const result = await getPet(1);
-        setType(result); // Cập nhật state với kết quả từ API
+        if (id) {
+          const result = await getPetByBreed(id);
+          setType(result);
+
+          // Gọi hàm getPetBySpecies khi specieid thay đổi
+        } else {
+          // Gọi hàm getPetByBreed khi id thay đổi
+          const result = await getPetBySpecies(specieid);
+          setType(result);
+        }
       } catch (error) {
-        console.error("Error fetching pet breed:", error);
+        console.error("Error fetching pet data:", error);
       }
     };
 
-    fetchData(); // Gọi hàm fetchData khi component được mount
-
-    // Nếu bạn muốn chạy hàm fetchData mỗi khi specieid thay đổi, hãy thêm specieid vào dependency array của useEffect
-  }, [specieid]);
-
+    fetchData(); // Gọi hàm fetchData khi component được mount hoặc khi dependencies thay đổi
+  }, [specieid, id]);
   return (
     <div className="w-5/6 p-4 bg-orange-100">
       <div className="text-3xl  font-bold py-4">Nổi bật</div>
@@ -43,4 +48,4 @@ const ProductList = () => {
     </div>
   );
 };
-export default ProductList;
+export default PetProductList;

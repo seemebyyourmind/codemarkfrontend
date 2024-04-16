@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const NotificationPopup = () => {
   const { isLoggedIn } = useSelector(selectAuth);
   return (
-    <div className="absolute top-full text-black right-0 rounded-sm  bg-orange-100 shadow-lg p-4 w-64 text-base">
+    <div className="absolute top-full text-black right-0 rounded-lg  bg-orange-100 shadow-lg p-4 w-64 text-base">
       {isLoggedIn ? (
         <span>Đơn xin duyêt thú cưng cửa bạn được chấp nhận.</span>
       ) : (

@@ -1,27 +1,20 @@
 import { Link } from "react-router-dom";
 
-const StuffProductCard = ({
-  type,
-  breed,
-  sex,
-  code,
-  discount,
-  imageUrl,
-  price,
-}) => {
+const StuffProductCard = ({ info }) => {
   return (
     <div className="w-[20rem] h-[26rem] bg-white rounded-[20px]">
-      <div className="flex flex-row justify-between mb-4 ">
-        <img src="./src/assets/pet-food.png" className="w-12 h-12"></img>
-        <div className="text-center">
-          <p className=" text-xl font-bold ">Mã sản phẩm {code}</p>
-          <p>
-            Mã {breed} {sex}
-          </p>
+      <div className="flex flex-row justify-between mb-4 h-[4rem] ">
+        <img
+          src="http://res.cloudinary.com/dhwhjdkrr/image/upload/v1706648252/anhchomeo/rhuetr2byhz3nhxjnrvb.png"
+          className="w-1/5 h-12"
+        ></img>
+        <div className="text-center w-3/5">
+          <p className=" text-xl font-bold ">Mã S{info.product_id}</p>
+          <p>{info.name}</p>
         </div>
 
-        <div className=" flex text-lg bg-orange-400 font-semibold text-white pl-4  px-2 rounded-l-full  justify-center items-center">
-          <p>{`- ${discount}%`}</p>
+        <div className=" w-1/5  h-[3rem] flex text-lg bg-orange-400 font-semibold text-white pl-4  px-2 rounded-l-full  justify-center items-center">
+          <p className="text-sm">{`- ${info.discount}%`}</p>
         </div>
       </div>
 
@@ -29,15 +22,15 @@ const StuffProductCard = ({
       <div className="  ">
         <img
           className="w-[15rem] h-[15rem] object-cover mx-auto my-4 rounded-[20px]"
-          src={imageUrl}
-          alt={`${type} product`}
+          src={info.image_1}
+          alt={`${info} product`}
         />
-        <p className=" pb-2 text-center font-semibold">{`Giá: $${price}`}</p>
+        <p className=" pb-2 text-center font-semibold">{`Giá: $${info.price}`}</p>
         <Link
-          to={"/googlelogin"}
+          to={`/stuffdetail/${info.product_id}`}
           className="flex flex-row bg-orange-300 text-white py-2 px-4 rounded-md justify-center mx-auto w-[250px] hover:bg-orange-500"
         >
-          <span className="mx-2">Xem sản phẩm</span>
+          Xem sản phẩm
         </Link>
       </div>
     </div>
