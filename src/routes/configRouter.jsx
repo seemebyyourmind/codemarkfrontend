@@ -18,6 +18,8 @@ import StuffProduct from "../components/Products/StuffProduct";
 
 import PetProductDetail from "../components/Products/PetProduct/PetProductDetail";
 import StuffProductDetail from "../components/Products/StuffProduct/StuffProductDetail";
+import AdminDashboard from "../pages/Admin/AdminDashboard";
+import Dashboard from "../components/Admin/Dashboard";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,6 +62,15 @@ const router = createBrowserRouter([
         path: "stuffdetail/:id",
         element: <StuffProductDetail />,
       },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminDashboard />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "dashboard", element: <Dashboard /> },
     ],
   },
   {

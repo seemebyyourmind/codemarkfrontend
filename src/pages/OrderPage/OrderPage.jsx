@@ -64,7 +64,7 @@ const OrderPage = () => {
         const newQuantity = number - 1;
         dispatch(updateStuffQuantity({ index, newQuantity }));
         console.log(user_id, stuff_id, newQuantity);
-        const result = await updateCart(user_id, stuff_id, newQuantity);
+        await updateCart(user_id, stuff_id, newQuantity);
       }
     } catch (err) {
       console.log(err);
@@ -82,7 +82,7 @@ const OrderPage = () => {
         const newQuantity = number + 1;
         dispatch(updateStuffQuantity({ index, newQuantity }));
         console.log(user_id, stuff_id, newQuantity);
-        const result = await updateCart(user_id, stuff_id, newQuantity);
+        await updateCart(user_id, stuff_id, newQuantity);
       }
     } catch (err) {
       console.log(err);
