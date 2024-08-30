@@ -34,13 +34,13 @@ const OrderPage = () => {
     setMoney(totalMoney);
   }, [petItems, stuffItems]);
 
-  const handleAddToCart = (product, type) => {
-    if (type === "pet") {
-      dispatch(addToPetCart(product));
-    } else {
-      dispatch(addToStuffCart(product));
-    }
-  };
+  // const handleAddToCart = (product, type) => {
+  //   if (type === "pet") {
+  //     dispatch(addToPetCart(product));
+  //   } else {
+  //     dispatch(addToStuffCart(product));
+  //   }
+  // };
 
   const handleRemoveFromCart = async (productId, type, user_id) => {
     try {
