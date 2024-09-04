@@ -42,44 +42,8 @@ export const getUserByRole = async (role,page,search) => {
     }
   };
 
-  //  const getUserByGroup = async (group,page) => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:3001/api/cart/getcart/?group=${group}&page=${page}`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     // Xử lý kết quả từ server (nếu cần)
-     
-  //     const data = await response.json();
-  //     return data;
-  //   } catch (error) {
-  //     throw new Error(`Error during signup: ${error}`);
-  //   }
-  // };
-  export const GetUserSearch = async (query,page) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/api/cart/getcart/?search=${query}&page=${page}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      // Xử lý kết quả từ server (nếu cần)
-     
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      throw new Error(`Error during signup: ${error}`);
-    }
-  };
+  
+
   export const getUsersInfo = async () => {
     try {
       const response = await fetch(
@@ -137,5 +101,79 @@ export const getUserByRole = async (role,page,search) => {
       return data;
     } catch (error) {
       throw new Error(`Error during signup: ${error}`);
+    }
+  };
+
+  export const deleteUser = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/admin/user/delete?id=${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(`Lỗi khi xóa người dùng: ${error}`);
+    }
+  };
+
+  export const setUserPassword = async (userId, newPassword) => {
+    try {
+      const response = await fetch(
+        'http://localhost:3000/admin/user/setpassword',
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: userId, new_password: newPassword }),
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(`Lỗi khi đặt mật khẩu mới: ${error}`);
+    }
+  };
+
+  export const deleteUserFromGroup = async (userId, groupId) => {
+    try {
+      const response = await fetch(
+        'http://localhost:3000/admin/user/deletefromgroup',
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: userId, group_id: groupId }),
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(`Lỗi khi xóa người dùng khỏi nhóm: ${error}`);
+    }
+  };
+
+  export const getUserSubmits = async (userId, page) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/admin/user/submits?id=${userId}&page=${page}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(`Lỗi khi lấy danh sách submit của người dùng: ${error}`);
     }
   };

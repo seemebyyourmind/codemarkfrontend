@@ -26,13 +26,12 @@ import AdminDashboard from "../pages/Admin/AdminDashboard";
 // import UserManager from "../components/Admin/User/UserManager";
 
 import PrivateRouter from "../components/PrivateRouter/PrivateRouter";
-import SubmitDetail from "../pages/Admin/SubmitDetail/SubmitDetail";
-import SubmitManager from "../pages/Admin/SubmitManager/SubmitManager";
+
 import UserManager from "../pages/Admin/User/UserManager"
 import DashBoard from "../pages/Admin/Dashboard"
 
 //import admin/user
-import SearchUser from '../pages/Admin/User/SearchUser'
+// import SearchUser from '../pages/Admin/User/SearchUser'
 import UpdateUser from '../pages/Admin/User/UpdateUser'
 import UserDetail from '../pages/Admin/User/UserDetail'
 import UserList from '../pages/Admin/User/UserList'
@@ -58,6 +57,12 @@ import SubmitProblem from "../components/Admin/Problem/Submit"
 import GroupManager from "../pages/Admin/Group/GroupManager";
 import GroupAdd from "../pages/Admin/Group/GroupAdd";
 import GroupList from "../pages/Admin/Group/GroupList";
+
+//submit 
+
+import SubmitManager from "../pages/Admin/Submit/SubmitManager";
+import SubmitList from "../pages/Admin/Submit/SubmitList";
+import SubmitDetail from "../pages/Admin/Submit/SubmitDetail";
 
 
 const router = createBrowserRouter([
@@ -145,9 +150,9 @@ const router = createBrowserRouter([
           ]
         },
 
-        { path: "searchUser", 
-        element:  <><PageTitle title="UserMagager|ListUserw |Admin"  /><SearchUser /></>,
-        errorElement: <ErrorPage />},
+        // { path: "searchUser", 
+        // element:  <><PageTitle title="UserMagager|ListUserw |Admin"  /><SearchUser /></>,
+        // errorElement: <ErrorPage />},
         { path: "codeexcute", 
           element:  <><PageTitle title="UserMagager|ListUserw |Admin"  /><CodeExcute/></>,
           errorElement: <ErrorPage />}
@@ -211,6 +216,17 @@ const router = createBrowserRouter([
       { path: "submit", 
         element: <SubmitManager />,
         errorElement: <ErrorPage />,
+        children:[
+          { path: "list", 
+          element: <SubmitList />,
+          errrElement: <ErrorPage />,
+          },
+          { path: "detail/:id", 
+            element: <SubmitDetail/>,
+            errrElement: <ErrorPage />,
+            },
+
+        ]
       },  
     { path: "detail", 
       element: <SubmitDetail />,

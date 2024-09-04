@@ -1,50 +1,84 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProblemInfo } from '../../../services/admin/ProblemApi';
+import { getSubmitsByProblemId } from '../../../services/admin/ProblemApi';
+import { SimplePagination } from '../SimplePagination';
 
-const ProblemSubmit= () => {
+const Submit = () => {
   const { id } = useParams();
-  const [problem, setProblem] = useState(null);
+  const [submits, setSubmits] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-  
-    fetchProblem();
-  }, [id]);
-  const fetchProblem=async()=>{
-    try {
-        const Problem= await getProblemInfo(id)
-        setProblem(Problem.ProblemInfo[0])
-    } catch (error) {
-       setError(error)
-    } finally{
-    setLoading(false)
-    }
-  
-}
+    fetchSubmits();
+  }, [id, currentPage]);
 
-  if (loading) return <div className="text-center mt-8">Loading...</div>;
+  const fetchSubmits = async () => {
+    try {
+      setLoading(true);
+      const response = await getSubmitsByProblemId(id, currentPage);
+      setSubmits(response.submits.submits);
+      setTotalPages(response.submits.totalPages);
+      setLoading(false);
+    } catch (error) {
+      setError('Đã xảy ra lỗi khi tải danh sách nộp bài');
+      setLoading(false);
+    }
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  if (loading) return <div className="text-center mt-8">Đang tải...</div>;
   if (error) return <div className="text-center mt-8 text-red-500">{error}</div>;
-  if (!problem) return <div className="text-center mt-8">No problem found</div>;
 
   return (
-    <div className="container mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold mb-4">{problem.title}</h1>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <p className="text-gray-600"><span className="font-semibold">Problem ID:</span> {problem.problem_id}</p>
-          <p className="text-gray-600"><span className="font-semibold">Difficulty:</span> {problem.difficulty}</p>
-          <p className="text-gray-600"><span className="font-semibold">Created:</span> {new Date(problem.created).toLocaleDateString()}</p>
-          <p className="text-gray-600"><span className="font-semibold">Author:</span> {problem.username || 'Unknown'}</p>
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Description:</h2>
-          <p className="text-gray-800">{problem.description}</p>
-        </div>
+    <div className="container mx-auto mt-8 p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+      <h1 className="text-3xl font-bold mb-6 text-center dark:text-white">Danh sách nộp bài</h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white dark:bg-gray-700 rounded-lg overflow-hidden">
+          <thead className="bg-gray-200 dark:bg-gray-600">
+            <tr>
+              <th className="px-4 py-2 text-left text-gray-700 dark:text-white">Người dùng</th>
+              <th className="px-4 py-2 text-left text-gray-700 dark:text-white">Ngôn ngữ</th>
+              <th className="px-4 py-2 text-left text-gray-700 dark:text-white">Trạng thái</th>
+              <th className="px-4 py-2 text-left text-gray-700 dark:text-white">Số test đúng</th>
+              <th className="px-4 py-2 text-left text-gray-700 dark:text-white">Tổng số test</th>
+              <th className="px-4 py-2 text-left text-gray-700 dark:text-white">Điểm</th>
+              <th className="px-4 py-2 text-left text-gray-700 dark:text-white">Lỗi</th>
+              <th className="px-4 py-2 text-left text-gray-700 dark:text-white">Thời gian</th>
+              <th className="px-4 py-2 text-left text-gray-700 dark:text-white">Bộ nhớ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {submits.map((submit) => (
+              <tr key={submit.submit_id} className="border-b dark:border-gray-600">
+                <td className="px-4 py-2 dark:text-white">{submit.username}</td>
+                <td className="px-4 py-2 dark:text-white">{submit.language_id}</td>
+                <td className="px-4 py-2 dark:text-white">{submit.status}</td>
+                <td className="px-4 py-2 dark:text-white">{submit.numberTestcasePass}</td>
+                <td className="px-4 py-2 dark:text-white">{submit.numberTestcase}</td>
+                <td className="px-4 py-2 dark:text-white">{submit.points}</td>
+                <td className="px-4 py-2 dark:text-white">{submit.error}</td>
+                <td className="px-4 py-2 dark:text-white">{submit.timeExecute}</td>
+                <td className="px-4 py-2 dark:text-white">{submit.memoryUsage}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="mt-6">
+        <SimplePagination 
+          currentPage={currentPage} 
+          numberPage={totalPages} 
+          onPageChange={handlePageChange} 
+        />
       </div>
     </div>
   );
 };
 
-export default ProblemSubmit;
+export default Submit;

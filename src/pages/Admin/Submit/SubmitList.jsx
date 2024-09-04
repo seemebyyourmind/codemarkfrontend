@@ -3,7 +3,7 @@ import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 import SelectDifficulty from '../../../components/Form/SelectDifficulty';
 import { useState, useEffect } from 'react';
 import { SimplePagination } from '../../../components/Admin/SimplePagination';
-import { getProblemBySearch,deleteProblem } from '../../../services/admin/ProblemApi';
+import { getProblemBySearch } from '../../../services/admin/ProblemApi';
 import { Table } from '../../../components/TableSetting';
 const ProblemList=()=>{
     const [selectedDifficulty, setSelectedDifficulty] = useState('');
@@ -49,15 +49,17 @@ const ProblemList=()=>{
     // const handleSubmit = async () => {
     //   await fetchProblems();
     // };
-    const deleteRow = async (problemId) => {
+    const deleteRow = async (userId) => {
       try {
-        console.log(problemId)
-        // Gọi API để xóa bài toán
-        await deleteProblem(problemId);
-        // Cập nhật danh sách bài toán sau khi xóa
-        fetchProblems();
+        console.log(userId)
+        // Gọi API để xóa người dùng
+        // await fetch(`/api/Problems/${userId}`, {
+        //   method: 'DELETE',
+        // });
+        // // Cập nhật danh sách người dùng sau khi xóa
+        // fetchProblems();
       } catch (error) {
-        console.error('Lỗi khi xóa bài toán:', error);
+        console.error('Error deleting user:', error);
       }
     };
   
@@ -66,7 +68,7 @@ const ProblemList=()=>{
   
     return (
       <>
-        <Breadcrumb pageName='UserList' />
+        <Breadcrumb pageName='SubmitList' />
         <div className='flex flex-wrap gap-4 justify-center align-center'>
           <div className="hidden sm:block my-3">
             <div className="relative">
