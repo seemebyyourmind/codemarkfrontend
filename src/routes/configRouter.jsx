@@ -57,12 +57,18 @@ import SubmitProblem from "../components/Admin/Problem/Submit"
 import GroupManager from "../pages/Admin/Group/GroupManager";
 import GroupAdd from "../pages/Admin/Group/GroupAdd";
 import GroupList from "../pages/Admin/Group/GroupList";
+import GroupDetail from "../pages/Admin/Group/GroupDetail";
+import UserGroup from "../components/Admin/Group/User"
+import ProblemGroup from "../components/Admin/Group/Problem"
+import InfoGroup from "../components/Admin/Group/Info";
+
 
 //submit 
 
 import SubmitManager from "../pages/Admin/Submit/SubmitManager";
 import SubmitList from "../pages/Admin/Submit/SubmitList";
 import SubmitDetail from "../pages/Admin/Submit/SubmitDetail";
+
 
 
 const router = createBrowserRouter([
@@ -139,7 +145,7 @@ const router = createBrowserRouter([
             errrElement: <ErrorPage />,
             },
             { path: "group", 
-              element: <GroupUser />,
+              element: <GroupUser/>,
               errrElement: <ErrorPage />,
               },
             { path: "submit", 
@@ -208,6 +214,26 @@ const router = createBrowserRouter([
           { path: "add", 
             element: <GroupAdd/>,
             errrElement: <ErrorPage />,
+            },
+          { path: "detail/:id", 
+              element: <GroupDetail/>,
+              errrElement: <ErrorPage />,
+              children:[
+                {  path: "members", 
+                element: <UserGroup />,
+                errrElement: <ErrorPage />,
+                },
+                { path: "problems", 
+                  element: <ProblemGroup />,
+                  errrElement: <ErrorPage />,
+                  },
+                  { path: "info", 
+                    element: <InfoGroup />,
+                    errrElement: <ErrorPage />,
+                    },
+                
+    
+              ]
             },
          
 
