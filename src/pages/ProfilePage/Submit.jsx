@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getSubmitsByProblemId } from '../../../services/admin/SubmitApi';
+import { useSelector } from 'react-redux';
+import { getSubmitsByUserId } from '../../services/admin/SubmitApi';
 
 const Submit = () => {
-  const { id } = useParams();
+  const userId = useSelector(state => state.auth.user.user_id);
   const [submits, setSubmits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,11 +13,11 @@ const Submit = () => {
 
   useEffect(() => {
     fetchSubmits();
-  }, [id, currentPage]);
+  }, [currentPage]);
 
   const fetchSubmits = async () => {
     try {
-      const response = await getSubmitsByProblemId(id, currentPage);
+      const response = await getSubmitsByUserId(userId, currentPage);
       setSubmits(response.submits);
       setCurrentPage(parseInt(response.currentPage));
       setTotalPages(response.totalPages);
@@ -34,13 +34,13 @@ const Submit = () => {
 
   return (
     <div className="container mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold mb-6">Danh sách submit của bài toán</h1>
+      <h1 className="text-3xl font-bold mb-6">Danh sách submit của bạn</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white">
           <thead className="bg-gray-100">
             <tr>
               <th className="py-2 px-4 border-b text-left">ID Submit</th>
-              <th className="py-2 px-4 border-b text-left">Người dùng</th>
+              <th className="py-2 px-4 border-b text-left">Bài toán</th>
               <th className="py-2 px-4 border-b text-left">Trạng thái</th>
               <th className="py-2 px-4 border-b text-left">Số test case đạt</th>
               <th className="py-2 px-4 border-b text-left">Tổng số test case</th>
@@ -53,7 +53,7 @@ const Submit = () => {
             {submits.map((submit) => (
               <tr key={submit.submit_id} className="hover:bg-gray-50">
                 <td className="py-2 px-4 border-b">{submit.submit_id}</td>
-                <td className="py-2 px-4 border-b">{submit.username}</td>
+                <td className="py-2 px-4 border-b">{submit.title}</td>
                 <td className="py-2 px-4 border-b">{submit.status}</td>
                 <td className="py-2 px-4 border-b">{submit.numberTestcasePass}</td>
                 <td className="py-2 px-4 border-b">{submit.numberTestcase}</td>

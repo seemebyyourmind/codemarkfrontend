@@ -14,29 +14,18 @@ const ProfilePage = () => {
         <div className="w-1/4 p-4 flex flex-col">
           <Link
             className=" py-2 my-2 text-center font-medium rounded-lg text-white text-base bg-orange-300 hover:bg-orange-500"
-            to={"profile"}
+            to={"info"}
           >
             Thông tin cá nhân
           </Link>
           <Link
             className="  py-2 my-2 text-center font-medium rounded-lg text-white text-base bg-orange-300 hover:bg-orange-500"
-            to={"order"}
+            to={"submit"}
           >
             {" "}
-            Danh sách đặt hàng
+            Thông tin bài nộp
           </Link>
-          <Link
-            className="  py-2 my-2 text-center font-medium rounded-lg text-white text-base bg-orange-300 hover:bg-orange-500"
-            to={"petadopt"}
-          >
-            Danh sách thú bỏ rơi
-          </Link>
-          <Link
-            className=" py-2 my-2 text-center font-medium rounded-lg text-white text-base bg-orange-300 hover:bg-orange-500"
-            to={"petrequire"}
-          >
-            Danh sách xin nhận nuôi
-          </Link>
+         
         </div>
         <div className="w-3/4 p-4">
           <Outlet></Outlet>

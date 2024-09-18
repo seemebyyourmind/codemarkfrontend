@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 // Thay đổi đường dẫn này để phản ánh cấu trúc của dự án của bạn
 import { logout } from "../../features/auth/authSlice";
-import { logOutCart } from "../../features/cart/cartSlice";
+
 import { useNavigate } from "react-router-dom";
 import { selectAuth } from "../../features/auth/authSlice";
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ const UserPopUp = () => {
   const handleLogout = () => {
     // Thực hiện các hành động cần thiết khi đăng xuất
     dispatch(logout());
-    dispatch(logOutCart());
+  
     navigate("./");
   };
   return (

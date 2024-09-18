@@ -30,4 +30,32 @@ export const runcodeUser = async (source_code, language, input) => {
       throw new Error(`Error during code execution: ${error}`);
     }
   };
-  
+export const runAndSubmitCode = async (source, problemId, language,userId) => {
+  try {
+    const requestData = {
+      source: source,
+      problemId: problemId,
+      language: language,
+      userId:userId
+    };
+
+    console.log('Dữ liệu gửi đi:', requestData);
+
+    const response = await fetch('http://localhost:3000/api/code/runandsubmit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Lỗi server: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(`Lỗi khi chạy và nộp code: ${error}`);
+  }
+};

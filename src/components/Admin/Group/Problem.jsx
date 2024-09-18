@@ -19,6 +19,7 @@ const GroupProblems = () => {
 
   useEffect(() => {
     fetchProblems();
+    console.log(problems);
   }, [id, currentPage]);
 
   useEffect(() => {
@@ -95,6 +96,7 @@ const GroupProblems = () => {
               <th className="py-2 px-4 border-b text-left">ID</th>
               <th className="py-2 px-4 border-b text-left">Tiêu đề</th>
               <th className="py-2 px-4 border-b text-left">Độ khó</th>
+              <th className="py-2 px-4 border-b text-left">Ngày tạo</th>
               <th className="py-2 px-4 border-b text-left">Hành động</th>
             </tr>
           </thead>
@@ -104,6 +106,7 @@ const GroupProblems = () => {
                 <td className="py-2 px-4 border-b">{problem.problem_id}</td>
                 <td className="py-2 px-4 border-b">{problem.title}</td>
                 <td className="py-2 px-4 border-b">{problem.difficulty}</td>
+                <td className="py-2 px-4 border-b">{problem.created}</td>
                 <td className="py-2 px-4 border-b">
                   <button
                     onClick={() => handleRemoveProblem(problem.problem_id)}

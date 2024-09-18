@@ -66,7 +66,7 @@ const ProblemList=()=>{
   
     return (
       <>
-        <Breadcrumb pageName='UserList' />
+        <Breadcrumb pageName='Danh sách problems' />
         <div className='flex flex-wrap gap-4 justify-center align-center'>
           <div className="hidden sm:block my-3">
             <div className="relative">

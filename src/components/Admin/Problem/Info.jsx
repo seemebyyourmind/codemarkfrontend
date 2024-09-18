@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProblemInfo, updateProblemInfo } from '../../../services/admin/ProblemApi';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const ProblemInfo = () => {
   const { id } = useParams();
@@ -50,6 +52,10 @@ const ProblemInfo = () => {
     setEditedProblem(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleDescriptionChange = (content) => {
+    setEditedProblem(prev => ({ ...prev, description: content }));
+  };
+
   if (loading) return <div className="text-center mt-8">Đang tải...</div>;
   if (error) return <div className="text-center mt-8 text-red-500">{error}</div>;
   if (!problem) return <div className="text-center mt-8">Không tìm thấy bài toán</div>;
@@ -75,11 +81,10 @@ const ProblemInfo = () => {
             <option value="medium">Trung bình</option>
             <option value="hard">Khó</option>
           </select>
-          <textarea
-            name="description"
+          <ReactQuill
             value={editedProblem.description}
-            onChange={handleChange}
-            className="w-full p-2 border rounded h-40"
+            onChange={handleDescriptionChange}
+            className="h-100"
           />
           <div className="flex justify-end space-x-2">
             <button onClick={handleCancel} className="px-4 py-2 bg-gray-300 rounded">Hủy</button>
@@ -92,15 +97,19 @@ const ProblemInfo = () => {
             <h1 className="text-3xl font-bold">{problem.title}</h1>
             <button onClick={handleEdit} className="px-4 py-2 bg-green-500 text-white rounded">Chỉnh sửa</button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <p className="text-gray-600"><span className="font-semibold">ID bài toán:</span> {problem.problem_id}</p>
-              <p className="text-gray-600"><span className="font-semibold">Độ khó:</span> {problem.difficulty}</p>
-              <p className="text-gray-600"><span className="font-semibold">Ngày tạo:</span> {new Date(problem.created).toLocaleDateString('vi-VN')}</p>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <p className="text-gray-600"><span className="font-semibold">ID bài toán:</span> {problem.problem_id}</p>
+                <p className="text-gray-600"><span className="font-semibold">Độ khó:</span> {problem.difficulty}</p>
+                <p className="text-gray-600"><span className="font-semibold">Ngày tạo:</span> {new Date(problem.created).toLocaleDateString('vi-VN')}</p>
+              </div>
             </div>
             <div>
               <h2 className="text-xl font-semibold mb-2">Mô tả:</h2>
-              <p className="text-gray-800 bg-gray-100 p-4 rounded">{problem.description}</p>
+              <div className="text-gray-800 bg-gray-100 p-4 rounded">
+                <ReactQuill value={problem.description}   readOnly={true} theme={null} />
+              </div>
             </div>
           </div>
         </>

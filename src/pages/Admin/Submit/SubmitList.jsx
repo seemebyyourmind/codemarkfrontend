@@ -1,115 +1,140 @@
-import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
-
-import SelectDifficulty from '../../../components/Form/SelectDifficulty';
 import { useState, useEffect } from 'react';
-import { SimplePagination } from '../../../components/Admin/SimplePagination';
-import { getProblemBySearch } from '../../../services/admin/ProblemApi';
-import { Table } from '../../../components/TableSetting';
-const ProblemList=()=>{
-    const [selectedDifficulty, setSelectedDifficulty] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [input, setInput] = useState('');
-    const [numberPage, setNumberPage] = useState(0);
-    const [Problems, setProblem] = useState([]);
-  
-    
-    useEffect(() => {
-    // localStorage.setItem('currentPage', currentPage);
-    // localStorage.setItem('selectedDifficulty', selectedDifficulty);
-    // localStorage.setItem('input', input);
-      fetchProblems();
-    }, [selectedDifficulty, currentPage, input]);
-  
-    const fetchProblems = async () => {
+import { getAllSubmits, deleteSubmit } from '../../../services/admin/SubmitApi';
+import { FaEye, FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
+const SubmitList = () => {
+  const [submits, setSubmits] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalSubmits, setTotalSubmits] = useState(0);
+  const [sortBy, setSortBy] = useState('submit_id');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const fetchSubmits = async (page) => {
+    try {
+      setIsLoading(true);
+      const data = await getAllSubmits(page, 15, sortBy);
+      setSubmits(data.submits);
+      setCurrentPage(data.currentPage);
+      setTotalPages(data.totalPages);
+      setTotalSubmits(data.totalSubmits);
+    } catch (err) {
+      setError('Có lỗi xảy ra khi tải dữ liệu');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSubmits(currentPage);
+  }, [currentPage, sortBy]);
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const handleDelete = async (submitId) => {
+    if (window.confirm('Bạn có chắc chắn muốn xóa submit này?')) {
       try {
-        const response = await getProblemBySearch(selectedDifficulty, currentPage, input);
-        setProblem(response.problems.problems); // Cập nhật dữ liệu người dùng
-        setNumberPage(Math.ceil(response.problems.total_count / 15)); // Cập nhật số trang
-        console.log('Number of pages:', numberPage); // Kiểm tra số trang
-        console.log(response)
-      } catch (error) {
-        console.error('Error fetching Problems:', error);
+        await deleteSubmit(submitId);
+        fetchSubmits(currentPage);
+      } catch (err) {
+        setError('Có lỗi xảy ra khi xóa submit');
       }
-    };
-  
-    const handleOptionDifficulty = (value) => {
-      setSelectedDifficulty(value);
-      setCurrentPage(1);
-    };
-  
-    const handleInputChange = (e) => {
-      setInput(e.target.value);
-      setCurrentPage(1);
-    };
-  
-    const handPageChange = (value) => {
-      setCurrentPage(value);
-    };
-  
-    // const handleSubmit = async () => {
-    //   await fetchProblems();
-    // };
-    const deleteRow = async (userId) => {
-      try {
-        console.log(userId)
-        // Gọi API để xóa người dùng
-        // await fetch(`/api/Problems/${userId}`, {
-        //   method: 'DELETE',
-        // });
-        // // Cập nhật danh sách người dùng sau khi xóa
-        // fetchProblems();
-      } catch (error) {
-        console.error('Error deleting user:', error);
-      }
-    };
-  
-   
-    
-  
-    return (
-      <>
-        <Breadcrumb pageName='SubmitList' />
-        <div className='flex flex-wrap gap-4 justify-center align-center'>
-          <div className="hidden sm:block my-3">
-            <div className="relative">
-              <button  className="absolute left-0 top-1/2 -translate-y-1/2">
-                <svg
-                  className="fill-body hover:fill-primary dark:fill-bodydark dark:hover:fill-primary"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M9.16666 3.33332C5.945 3.33332 3.33332 5.945 3.33332 9.16666C3.33332 12.3883 5.945 15 9.16666 15C12.3883 15 15 12.3883 15 9.16666C15 5.945 12.3883 3.33332 9.16666 3.33332ZM1.66666 9.16666C1.66666 5.02452 5.02452 1.66666 9.16666 1.66666C13.3088 1.66666 16.6667 5.02452 16.6667 9.16666C16.6667 13.3088 13.3088 16.6667 9.16666 16.6667C5.02452 16.6667 1.66666 13.3088 1.66666 9.16666Z"
-                    fill=""
-                  />
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M13.2857 13.2857C13.6112 12.9603 14.1388 12.9603 14.4642 13.2857L18.0892 16.9107C18.4147 17.2362 18.4147 17.7638 18.0892 18.0892C17.7638 18.4147 17.2362 18.4147 16.9107 18.0892L13.2857 14.4642C12.9603 14.1388 12.9603 13.6112 13.2857 13.2857Z"
-                    fill=""
-                  />
-                </svg>
-              </button>
-  
-              <input
-                type="text-sm"
-                placeholder="Type to search..."
-                value={input}
-                onChange={handleInputChange}
-                className="w-full bg-transparent pl-9 pr-4 text-black focus:outline-none dark:text-white xl:w-125"
-              />
-            </div>
-          </div>
-          <SelectDifficulty list={['hard', 'medium', 'easy']} name='difficulty' onChange={handleOptionDifficulty} />
+    }
+  };
+
+  const handleView = (submitId) => {
+    navigate(`/admin/submit/detail/${submitId}`);
+  };
+
+  if (isLoading) return <div>Đang tải...</div>;
+  if (error) return <div>{error}</div>;
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Danh sách Submit</h1>
+      
+      <div className="mb-4">
+        <label htmlFor="sortBy" className="mr-2">Sắp xếp theo:</label>
+        <select
+          id="sortBy"
+          value={sortBy}
+          onChange={handleSortChange}
+          className="border p-2 rounded"
+        >
+          <option value="submit_id">Submit ID</option>
+          <option value="user_id">User ID</option>
+          <option value="problem_id">Problem ID</option>
+        </select>
+      </div>
+
+      <table className="min-w-full bg-white border border-gray-300">
+        <thead>
+          <tr>
+            <th className="py-2 px-4 border-b text-left">Submit ID</th>
+            <th className="py-2 px-4 border-b text-left">User</th>
+            <th className="py-2 px-4 border-b text-left">Problem</th>
+            <th className="py-2 px-4 border-b text-left">Status</th>
+            <th className="py-2 px-4 border-b text-left">Points</th>
+            <th className="py-2 px-4 border-b text-left">Testcases</th>
+            <th className="py-2 px-4 border-b text-left">Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          {submits.map((submit) => (
+            <tr key={submit.submit_id}>
+              <td className="py-2 px-4 border-b">{submit.submit_id}</td>
+              <td className="py-2 px-4 border-b">{submit.user_id} - {submit.username}</td>
+              <td className="py-2 px-4 border-b">{submit.problem_id} - {submit.title}</td>
+              <td className="py-2 px-4 border-b">{submit.status}</td>
+              <td className="py-2 px-4 border-b">{submit.points}</td>
+              <td className="py-2 px-4 border-b">{submit.numberTestcasePass}/{submit.numberTestcase}</td>
+              <td className="py-2 px-4 border-b">
+                <button onClick={() => handleView(submit.submit_id)} className="mr-2 text-blue-500">
+                  <FaEye />
+                </button>
+                <button onClick={() => handleDelete(submit.submit_id)} className="text-red-500">
+                  <FaTrash />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="flex justify-between items-center mt-4">
+        <span>Tổng số submit: {totalSubmits}</span>
+        <div>
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 mr-2 bg-primary text-white rounded disabled:opacity-50"
+          >
+            Trang trước
+          </button>
+          <span>Trang {currentPage} / {totalPages}</span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 ml-2 bg-primary text-white rounded disabled:opacity-50"
+          >
+            Trang sau
+          </button>
         </div>
-        <SimplePagination currentPage={currentPage} numberPage={numberPage} onPageChange={handPageChange} />
-        <Table rows={Problems} deleteRow={deleteRow}  url1={'/admin/problem/updateproblem/'} url2={'/admin/problem/problemdetail/'} fields={['problem_id', "title",  'groups',"created","username", "difficulty"]} />
-      </>
-    );
-}
-export default ProblemList
+      </div>
+    </div>
+  );
+};
+
+export default SubmitList;

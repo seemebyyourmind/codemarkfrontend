@@ -3,30 +3,20 @@ import PageTitle from "../components/PageTitle";
 
 import HomePage from "../pages/HomePage/HomePage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import OrderPage from "../pages/OrderPage/OrderPage";
+
 import ProductPage from "../pages/ProductPage/ProductPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import SignupPage from "../pages/SignupPage/SignupPage";
-// import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import Profile from "../pages/ProfilePage/Profile";
-import Order from "../pages/ProfilePage/Order";
-import PetAdopt from "../pages/ProfilePage/PetAdopt";
-import PetAdoptRequire from "../pages/ProfilePage/PetAdoptRequire";
-import UpdateProfile from "../pages/ProfilePage/UpdateProfile";
+import Submit from "../pages/ProfilePage/Submit";
+
 // import ProductType from "../components/Products/ProductType";
 
-import PetProduct from "../components/Products/PetProduct";
-import StuffProduct from "../components/Products/StuffProduct";
 
-import PetProductDetail from "../components/Products/PetProduct/PetProductDetail";
-import StuffProductDetail from "../components/Products/StuffProduct/StuffProductDetail";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 
-
-// import UserManager from "../components/Admin/User/UserManager";
-
 import PrivateRouter from "../components/PrivateRouter/PrivateRouter";
-
 import UserManager from "../pages/Admin/User/UserManager"
 import DashBoard from "../pages/Admin/Dashboard"
 
@@ -70,6 +60,10 @@ import SubmitList from "../pages/Admin/Submit/SubmitList";
 import SubmitDetail from "../pages/Admin/Submit/SubmitDetail";
 
 
+//user 
+import GroupPage from "../pages/User/Group/Group"
+import ProblemPage from "../pages/User/Problem/Problem"
+
 
 const router = createBrowserRouter([
   {
@@ -79,39 +73,40 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <ProductPage /> },
       {
-        path: "productpage",
+        path: "about",
         element: <ProductPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "group",
+        element: <GroupPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "problem/:id",
+        element: <ProblemPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "submit",
+        element: <ProductPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
+        errorElement: <ErrorPage />,
         children: [
-          // { index: true, element: <ProductType /> },
           {
-            path: "pet/:specieid/",
-            element: <PetProduct />,
+            path: "info",
+            element: <Profile />,
           },
           {
-            path: "pet/:specieid/:id",
-            element: <PetProduct />,
+            path: "submit",
+            element:  <Submit />,
           },
-          {
-            path: "stuff/:catalogid/:id",
-            element: <StuffProduct />,
-          },
-          {
-            path: "stuff/:catalogid/",
-            element: <StuffProduct />,
-          },
+        
         ],
-      },
-      {
-        path: "orderpage",
-        element: <OrderPage />,
-      },
-      {
-        path: "petdetail/:id",
-        element: <PetProductDetail />,
-      },
-      {
-        path: "stuffdetail/:id",
-        element: <StuffProductDetail />,
       },
     ],
   },
@@ -126,7 +121,7 @@ const router = createBrowserRouter([
       { path: "user", 
         element: <><PageTitle title="UserMagager |Admin"  /><UserManager /></>,
         errorElement: <ErrorPage />,
-      children:[
+         children:[
         { index:true, path: "userlist", 
         element: <><PageTitle title="UserMagager|ListUser |Admin"  /><UserList /></>,
         errorElement: <ErrorPage />},
@@ -138,19 +133,20 @@ const router = createBrowserRouter([
         
         { path: "userdetail/:id", 
         element: <><PageTitle title="UserMagager|Detail |Admin"  /><UserDetail /></> ,
-        errrElement: <ErrorPage />,
+        errorElement: <ErrorPage />, 
           children:[
+            { index: true, element:  <InfoUser />,errorElement: <ErrorPage />, },
             {  path: "info", 
             element: <InfoUser />,
-            errrElement: <ErrorPage />,
+            errorElement: <ErrorPage />,
             },
             { path: "group", 
               element: <GroupUser/>,
-              errrElement: <ErrorPage />,
+              errorElement: <ErrorPage />,
               },
             { path: "submit", 
                 element: <SubmitUser />,
-                errrElement: <ErrorPage />,
+                errorElement: <ErrorPage />,
              },
 
           ]
@@ -169,33 +165,35 @@ const router = createBrowserRouter([
           element: <><PageTitle title="ProblemMagager|Admin"  /><ProblemManager /></>,
           errorElement: <ErrorPage />,
           children:[
+            { index: true, element:  <InfoUser />,errorElement: <ErrorPage />, },
             { path: "list", 
             element: <ProblemList />,
-            errrElement: <ErrorPage />,
+            errorElement: <ErrorPage />,
             },
             { path: "add", 
               element: <ProblemAdd />,
-              errrElement: <ErrorPage />,
+              errorElement: <ErrorPage />,
              },
             { path: "problemdetail/:id", 
                 element: <><PageTitle title="UserMagager|Detail |Admin"  /><ProblemDetail/></> ,
-                errrElement: <ErrorPage />,
+                errorElement: <ErrorPage />,
                   children:[
+                    { index: true, element:  <InfoProblem />,errorElement: <ErrorPage />, },
                     {  path: "info", 
                     element: <InfoProblem />,
-                    errrElement: <ErrorPage />,
+                    errorElement: <ErrorPage />,
                     },
                     { path: "detail", 
                       element: <DetailProblem />,
-                      errrElement: <ErrorPage />,
+                      errorElement: <ErrorPage />,
                       },
                     { path: "submit", 
                         element: <SubmitProblem />,
-                        errrElement: <ErrorPage />,
+                        errorElement: <ErrorPage />,
                      },
                      { path: "testcase", 
                       element: <TestCaseProblem />,
-                      errrElement: <ErrorPage />,
+                      errorElement: <ErrorPage />,
                    },
         
                   ]
@@ -207,29 +205,31 @@ const router = createBrowserRouter([
         element: <><PageTitle title="GroupMagager|Admin"  /><GroupManager /></>,
         errorElement: <ErrorPage />,
         children:[
+          { index: true, element: <GroupList />,errorElement: <ErrorPage />, },
           { path: "list", 
           element: <GroupList />,
-          errrElement: <ErrorPage />,
+          errorElement: <ErrorPage />,
           },
           { path: "add", 
             element: <GroupAdd/>,
-            errrElement: <ErrorPage />,
+            errorElement: <ErrorPage />,
             },
           { path: "detail/:id", 
               element: <GroupDetail/>,
-              errrElement: <ErrorPage />,
+              errorElement: <ErrorPage />,
               children:[
+                { index: true, element: <InfoGroup />,errorElement: <ErrorPage />, },
                 {  path: "members", 
                 element: <UserGroup />,
-                errrElement: <ErrorPage />,
+                errorElement: <ErrorPage />,
                 },
                 { path: "problems", 
                   element: <ProblemGroup />,
-                  errrElement: <ErrorPage />,
+                  errorElement: <ErrorPage />,
                   },
                   { path: "info", 
                     element: <InfoGroup />,
-                    errrElement: <ErrorPage />,
+                    errorElement: <ErrorPage />,
                     },
                 
     
@@ -238,18 +238,21 @@ const router = createBrowserRouter([
          
 
         ]
-    },
+    }, 
+     { path: "executed", 
+      element:  <><PageTitle title="UserMagager|codeExcecute |Admin"  /><CodeExcute/></>,
+      errorElement: <ErrorPage />},//them
       { path: "submit", 
         element: <SubmitManager />,
         errorElement: <ErrorPage />,
         children:[
           { path: "list", 
           element: <SubmitList />,
-          errrElement: <ErrorPage />,
+          errorElement: <ErrorPage />,
           },
           { path: "detail/:id", 
             element: <SubmitDetail/>,
-            errrElement: <ErrorPage />,
+            errorElement: <ErrorPage />,
             },
 
         ]
@@ -281,25 +284,11 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "profile",
+        path: "order",
         element: <Profile />,
       },
-      {
-        path: "order",
-        element: <Order />,
-      },
-      {
-        path: "petadopt",
-        element: <PetAdopt />,
-      },
-      {
-        path: "petrequire",
-        element: <PetAdoptRequire />,
-      },
-      {
-        path: "updateprofile",
-        element: <UpdateProfile />,
-      },
+      
+    
     ],
   },
 ]);

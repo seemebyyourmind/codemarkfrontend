@@ -2,31 +2,52 @@
 import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 import SelectRole from '../../../components/Form/SelectRole'
 import { useState, useEffect } from 'react';
-import { SimplePagination } from '../../../components/Admin/SimplePagination';
-import { getUserByRole,deleteUser } from '../../../services/admin/UserApi';
-import { Table } from '../../../components/TableSetting';
+import { getUserByRole, deleteUser, getUserRoles, updateUserRole } from '../../../services/admin/UserApi';
+import { BsFillTrashFill} from "react-icons/bs";
+import { FaEye } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const UserList = () => {
-  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedRole, setSelectedRole] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const [input, setInput] = useState('');
-  const [numberPage, setNumberPage] = useState(0);
+  const [input, setInput] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
   const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    localStorage.setItem('currentPage', currentPage);
-    localStorage.setItem('selectedRole', selectedRole);
-    localStorage.setItem('input', input);
     fetchUsers();
-  }, [selectedRole, currentPage, input]);
+  }, [currentPage, searchTerm, selectedRole]);
+
+  useEffect(() => {
+    fetchRoles();
+  }, []);
 
   const fetchUsers = async () => {
+    setIsLoading(true);
     try {
-      const response = await getUserByRole(selectedRole, currentPage, input);
+      const response = await getUserByRole(selectedRole, currentPage, searchTerm);
       setUsers(response.users.users);
-      setNumberPage(Math.ceil(response.users.total_count / 15));
+      setCurrentPage(parseInt(response.users.currentPage));
+      setTotalPages(response.users.totalPages);
+      setTotalUsers(response.users.totalUsers);
+     
     } catch (error) {
       console.error('Lỗi khi lấy dữ liệu người dùng:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchRoles = async () => {
+    try {
+      const response = await getUserRoles();
+      setRoles(response.roles);
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách vai trò:', error);
     }
   };
 
@@ -37,21 +58,28 @@ const UserList = () => {
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
-    setCurrentPage(1);
   };
 
-  const handlePageChange = (value) => {
-    setCurrentPage(value);
+  const handleSearch = () => {
+    setCurrentPage(1);
+    setSearchTerm(input);
   };
 
   const deleteRow = async (userId) => {
     try {
-      const response = await deleteUser(userId);
-      console.log('Kết quả xóa người dùng:', response.message);
-      // Cập nhật danh sách người dùng sau khi xóa thành công
+      await deleteUser(userId);
       fetchUsers();
     } catch (error) {
       console.error('Lỗi khi xóa người dùng:', error.message);
+    }
+  };
+
+  const handleRoleChange = async (userId, newRole) => {
+    try {
+      await updateUserRole(userId, newRole);
+      fetchUsers();
+    } catch (error) {
+      console.error('Lỗi khi cập nhật vai trò người dùng:', error);
     }
   };
 
@@ -59,11 +87,11 @@ const UserList = () => {
     <div className="bg-gray-100 min-h-screen p-6 dark:bg-gray-800">
       <Breadcrumb pageName='Danh sách người dùng' />
       <div className='flex flex-col md:flex-row gap-6 justify-between items-center mb-8'>
-        <div className="w-full md:w-1/2">
-          <div className="relative">
+        <div className="w-full md:w-1/2 flex">
+          <div className="relative flex-grow mr-2">
             <input
               type="text"
-              placeholder="Tìm kiếm..."
+              placeholder="Nhập thông tin username, phone, email để tìm kiếm"
               value={input}
               onChange={handleInputChange}
               className="w-full bg-white dark:bg-gray-700 pl-10 pr-4 py-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white"
@@ -90,29 +118,113 @@ const UserList = () => {
               />
             </svg>
           </div>
+          <button
+            onClick={handleSearch}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          >
+            Tìm kiếm
+          </button>
         </div>
         <SelectRole 
-          list={['admin', 'guess', 'user']} 
+          list={roles.map(role => role.name)} 
           name='Vai trò' 
           onChange={handleOptionRole}
           className="w-full md:w-auto bg-white dark:bg-gray-700 rounded-lg shadow-sm"
         />
       </div>
       <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden">
-        <Table 
-          rows={users} 
-          deleteRow={deleteRow}  
-          url1={'/admin/user/updateuser/'} 
-          url2={'/admin/user/userdetail/'} 
-          fields={['user_id', "username", "email", "phone", 'groups', "role_name"]} 
-        />
+        <div className="max-w-full overflow-x-auto table-wrapper">
+          <table className="table">
+            <thead>
+              <tr className="bg-gray-2 text-left dark:bg-meta-4">
+                <th className="py-4 px-4 font-medium text-black dark:text-white">user_id</th>
+                <th className="py-4 px-4 font-medium text-black dark:text-white">username</th>
+                <th className="py-4 px-4 font-medium text-black dark:text-white">email</th>
+                <th className="py-4 px-4 font-medium text-black dark:text-white">phone</th>
+                <th className="py-4 px-4 font-medium text-black dark:text-white">groups</th>
+                <th className="py-4 px-4 font-medium text-black dark:text-white">role_name</th>
+                <th className="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            {isLoading ? (
+              <tr>
+                <td colSpan={7} className="py-4 px-4 text-center text-gray-500">
+                  Đang tải...
+                </td>
+              </tr>
+            ) : users && users.length > 0 ? (
+                users.map((row) => (
+                  <tr key={row.user_id} className="content-center">
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">{row.user_id}</td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">{row.username}</td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">{row.email}</td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">{row.phone}</td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">{row.groups}</td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <select
+                        value={roles.find(role => role.role_id === row.role_id)?.name || ''}
+                        onChange={(e) => {
+                          const selectedRole = roles.find(role => role.name === e.target.value);
+                          if (selectedRole) {
+                            handleRoleChange(row.user_id, selectedRole.role_id);
+                          }
+                        }}
+                        className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-2 py-1"
+                      >
+                        {roles.map((role) => (
+                          <option key={role.role_id} value={role.name}>
+                            {role.name}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <span className="actions flex grid-cols-2 gap-4">
+                        <BsFillTrashFill
+                          className="delete-btn cursor-pointer"
+                          onClick={() => deleteRow(row.user_id)}
+                        />
+                          {/* <Link to={`/admin/user/updateuser/${row.user_id}`} className="edit-btn cursor-pointer">
+                          <BsFillPencilFill />
+                         </Link> */ }  
+                        <Link to={`/admin/user/userdetail/${row.user_id}`} className="detail-btn cursor-pointer">
+                          <FaEye />
+                        </Link>
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={7} className="py-4 px-4 text-center text-gray-500">
+                    Không có dữ liệu
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div className="mt-6">
-        <SimplePagination 
-          currentPage={currentPage} 
-          numberPage={numberPage} 
-          onPageChange={handlePageChange} 
-        />
+      <div className="flex justify-between items-center mt-4">
+        <span>Tổng số người dùng: {totalUsers}</span>
+        <div>
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 mr-2 bg-primary text-white rounded"
+          >
+            Trang trước
+          </button>
+          <span>Trang {currentPage} / {totalPages}</span>
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 ml-2 bg-primary text-white rounded"
+          >
+            Trang sau
+          </button>
+        </div>
       </div>
     </div>
   );

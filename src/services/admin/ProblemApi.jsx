@@ -21,7 +21,7 @@ export const getProblemInfo = async (id) => {
   try {
     console.log(` http://localhost:3000/admin/problem/getprobleminfo?id=${id}`)
     const response = await fetch(
-      ` http://localhost:3000/admin/problem/getprobleminfo?id=${id}`,
+      `http://localhost:3000/admin/problem/getprobleminfo?id=${id}`,
       {
         method: "GET",
         headers: {
@@ -185,5 +185,42 @@ export const getSubmitsByProblemId = async (problemId, page) => {
     return data;
   } catch (error) {
     throw new Error(`Lỗi khi lấy danh sách submit của bài toán: ${error}`);
+  }
+};
+
+export const createProblem = async (problemData) => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/admin/problem/create`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(problemData),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(`Lỗi khi tạo bài toán mới: ${error}`);
+  }
+};
+
+export const getLanguages = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/admin/problem/languages`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(`Lỗi khi lấy danh sách ngôn ngữ lập trình: ${error}`);
   }
 };

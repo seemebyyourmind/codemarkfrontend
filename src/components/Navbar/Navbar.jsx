@@ -47,7 +47,7 @@ export default function Navbar() {
     <div className="flex flex-row ">
       <div className="w-1/5 flex flex-row justify-center">
         <img src={brand} />
-        <h1 className="self-center">PETHUB.COM</h1>
+        <h1 className="self-center">CodeHack</h1>
       </div>
 
       <div className=" search self-center w-1/2 flex flex-row ">
@@ -103,7 +103,7 @@ export default function Navbar() {
       <div className="w-[30%] flex flex-row justify-around self-center font-medium">
         {isLoggedIn ? (
           <Link
-            to={"/profilepage"}
+            to={"/profile"}
             onMouseEnter={handleUserMouseEnter}
             onMouseLeave={handleUserMouseLeave}
             className=" relative text-xs flex flex-row items-center  hover:bg-orange-400 hover:text-white px-3 py-1 rounded-md"

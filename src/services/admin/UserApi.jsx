@@ -23,9 +23,13 @@ export const updateUser = async (updatedUser) => {
 export const getUserByRole = async (role,page,search) => {
 
     try {
-      console.log(`http://localhost:3000/admin/user/getuserbyrole/?role=${role}&page=${page}?search=${search}`)
+      let url = `http://localhost:3000/admin/user/getuserbyrole/?role=${role}&page=${page}`;
+      if (search !== '') {
+        url += `&search=${search}`;
+      }
+      console.log(url);
       const response = await fetch(
-        `http://localhost:3000/admin/user/getuserbyrole/?role=${role}&page=${page}&search=${search}`,
+        url,
         {
           method: "GET",
           headers: {
@@ -175,5 +179,41 @@ export const getUserByRole = async (role,page,search) => {
       return data;
     } catch (error) {
       throw new Error(`Lỗi khi lấy danh sách submit của người dùng: ${error}`);
+    }
+  };
+  export const updateUserRole = async (userId, roleId) => {
+    console.log("userId",userId,"rolke:",roleId)
+    try {
+      const response = await fetch(
+        'http://localhost:3000/admin/user/updaterole',
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: userId, role_id: roleId }),
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(`Lỗi khi cập nhật vai trò của người dùng: ${error}`);
+    }
+  };
+  export const getUserRoles = async () => {
+    try {
+      const response = await fetch(
+        'http://localhost:3000/admin/user/role',
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(`Lỗi khi lấy danh sách vai trò người dùng: ${error}`);
     }
   };

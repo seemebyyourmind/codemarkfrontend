@@ -1,32 +1,32 @@
-import { Link } from "react-router-dom";
+
+import { Link, useLocation } from 'react-router-dom';
+
 const SubNav = () => {
-  const Item = [
-    { name: "Chó ", path: "productpage/pet/1" },
-    { name: "Mèo", path: "productpage/pet/2" },
-    { name: "Thức Ăn", path: "/productpage/stuff/1" },
-    { name: "Đồ chơi", path: "/productpage/stuff/2" },
-    { name: "Y tế", path: "/productpage/stuff/3" },
-    { name: "Phụ kiện", path: "/productpage/stuff/4" },
-    { name: "Quần áo", path: "/productpage/stuff/5" },
-    { name: "Huấn luyện", path: "/productpage/stuff/6" },
-    { name: "Chăm sóc", path: "/productpage/stuff/7" },
-    { name: "Di chuyển", path: "/productpage/stuff/8" },
-  ];
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname === path ? 'border-b-2 border-white' : '';
+  };
 
   return (
-    <div className="text-sm flex flex-row justify-around my-4 ">
-      {Item.map((cate, index) => {
-        return (
-          <Link
-            className=" w-28 py-2 text-center  font-medium rounded-full text-white text-base bg-orange-300 hover:bg-orange-500"
-            key={index}
-            to={cate.path}
-          >
-            {cate.name}
-          </Link>
-        );
-      })}
+    <div className="flex justify-center space-x-4 my-4">
+      <Link to="/" className={`px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 ${isActive('/')}`}>
+        Trang chủ
+      </Link>
+      <Link to="/about" className={`px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 ${isActive('/about')}`}>
+        Giới thiệu
+      </Link>
+      <Link to="/group" className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ${isActive('/group')}`}>
+        Nhóm
+      </Link>
+      <Link to="/problem" className={`px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 ${isActive('/problem')}`}>
+        Bài tập
+      </Link>
+      <Link to="/submit" className={`px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 ${isActive('/submit')}`}>
+        Nộp bài
+      </Link>
     </div>
   );
 };
+
 export default SubNav;
