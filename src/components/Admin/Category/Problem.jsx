@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProblemsInGroup, removeProblemFromGroup, getProblemsWithGroupStatus, addProblemToGroup } from '../../../services/admin/GroupApi';
+import { getProblemsInCategory, removeCategoryFromProblem, getProblemsWithCategoryStatus, addCategoryToProblem } from '../../../services/admin/CategoryApi';
 import { BsFillTrashFill} from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-const GroupProblems = () => {
+const CategoryProblems = () => {
   const { id } = useParams();
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,10 +18,11 @@ const GroupProblems = () => {
   const [popupCurrentPage, setPopupCurrentPage] = useState(1);
   const [popupTotalPages, setPopupTotalPages] = useState(1);
   const [popupTotalProblems, setPopupTotalProblems] = useState(0);
-  const [searchTerm,setSearchTerm]=useState('')
+  const [searchTerm,setSearchTerm]=useState('');
+
   useEffect(() => {
     fetchProblems();
-    console.log(problems);
+ 
   }, [id, currentPage]);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const GroupProblems = () => {
 
   const fetchProblems = async () => {
     try {
-      const response = await getProblemsInGroup(id, currentPage);
+      const response = await getProblemsInCategory(id, currentPage);
       setProblems(response.problems);
       setCurrentPage(parseInt(response.currentPage));
       setTotalPages(response.totalPages);
@@ -43,31 +44,31 @@ const GroupProblems = () => {
   };
 
   const handleRemoveProblem = async (problemId) => {
-    if (window.confirm('Bạn có chắc chắn muốn xóa bài toán này khỏi nhóm?')) {
+    if (window.confirm('Bạn có chắc chắn muốn xóa bài toán này khỏi danh mục?')) {
       try {
-        await removeProblemFromGroup(problemId, id);
+        await removeCategoryFromProblem(problemId, id);
         fetchProblems();
         fetchPopupProblems();
-        alert('Bài toán đã được xóa khỏi nhóm thành công!');
+        alert('Bài toán đã được xóa khỏi danh mục thành công!');
       } catch (error) {
-        setError(`Lỗi khi xóa bài toán khỏi nhóm: ${error.message}`);
+        setError(`Lỗi khi xóa bài toán khỏi danh mục: ${error.message}`);
       }
     }
   };
 
   const handleAddProblem = async (problemId) => {
     try {
-      await addProblemToGroup(problemId, id);
+      await addCategoryToProblem(problemId, id);
       fetchPopupProblems();
       fetchProblems();
     } catch (error) {
-      setError(`Lỗi khi thêm bài toán vào nhóm: ${error.message}`);
+      setError(`Lỗi khi thêm bài toán vào danh mục: ${error.message}`);
     }
   };
 
   const fetchPopupProblems = async () => {
     try {
-      const response = await getProblemsWithGroupStatus(id, popupCurrentPage, searchTerm);
+      const response = await getProblemsWithCategoryStatus(id, popupCurrentPage, searchTerm);
       setPopupProblems(response.problems);
       setPopupCurrentPage(parseInt(response.currentPage));
       setPopupTotalPages(response.totalPages);
@@ -87,7 +88,7 @@ const GroupProblems = () => {
 
   return (
     <div className="container mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold mb-6">Danh sách bài toán của nhóm</h1>
+      <h1 className="text-3xl font-bold mb-6">Danh sách bài toán của danh mục</h1>
       <button
         onClick={() => setShowPopup(true)}
         className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -158,7 +159,7 @@ const GroupProblems = () => {
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 overflow-auto">
           <div className="bg-white p-6 rounded-lg w-11/12 max-w-4xl max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold mb-4">Thêm bài toán vào nhóm</h2>
+            <h2 className="text-2xl font-bold mb-4">Thêm bài toán vào danh mục</h2>
             <div className="mb-4 flex">
               <input
                 type="text"
@@ -191,19 +192,19 @@ const GroupProblems = () => {
                       <td className="py-1 px-2 border-b">{problem.title}</td>
                       <td className="py-1 px-2 border-b">{problem.difficulty}</td>
                       <td className="py-1 px-2 border-b">
-                        {problem.InGroup === 0 ? (
+                        {problem.InCategory === 0 ? (
                           <button
                             onClick={() => handleAddProblem(problem.problem_id)}
                             className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-xs"
                           >
-                            Thêm vào nhóm
+                            Thêm vào danh mục
                           </button>
                         ) : (
                           <button
                             onClick={() => handleRemoveProblem(problem.problem_id)}
                             className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"
                           >
-                            Xóa khỏi nhóm
+                            Xóa khỏi danh mục
                           </button>
                         )}
                       </td>
@@ -222,11 +223,8 @@ const GroupProblems = () => {
               </button>
               <div>
                 <button
-                  onClick={() => {
-                    if (popupCurrentPage > 1) {
-                      setPopupCurrentPage(prev => prev - 1);
-                    }
-                  }}
+                
+                onClick={() => setPopupCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={popupCurrentPage === 1}
                   className={`px-3 py-1 mr-2 text-white rounded text-sm ${popupCurrentPage === 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-primary hover:bg-primary-dark'}`}
                 >
@@ -234,11 +232,7 @@ const GroupProblems = () => {
                 </button>
                 <span className="text-sm">Trang {popupCurrentPage} / {popupTotalPages}</span>
                 <button
-                  onClick={() => {
-                    if (popupCurrentPage < popupTotalPages) {
-                      setPopupCurrentPage(prev => prev + 1);
-                    }
-                  }}
+                  onClick={() => setPopupCurrentPage(prev => Math.min(prev + 1, popupTotalPages))}
                   disabled={popupCurrentPage === popupTotalPages}
                   className={`px-3 py-1 ml-2 text-white rounded text-sm ${popupCurrentPage === popupTotalPages ? 'bg-gray-400 cursor-not-allowed' : 'bg-primary hover:bg-primary-dark'}`}
                 >
@@ -253,4 +247,4 @@ const GroupProblems = () => {
   );
 };
 
-export default GroupProblems;
+export default CategoryProblems;

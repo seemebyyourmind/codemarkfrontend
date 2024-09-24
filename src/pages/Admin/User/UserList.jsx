@@ -9,14 +9,15 @@ import { Link } from "react-router-dom";
 
 const UserList = () => {
   const [selectedRole, setSelectedRole] = useState('all');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const [input, setInput] = useState("");
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [totalUsers, setTotalUsers] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
+  
 
   useEffect(() => {
     fetchUsers();
@@ -66,11 +67,15 @@ const UserList = () => {
   };
 
   const deleteRow = async (userId) => {
-    try {
-      await deleteUser(userId);
-      fetchUsers();
-    } catch (error) {
-      console.error('Lỗi khi xóa người dùng:', error.message);
+    if (window.confirm("Bạn có chắc chắn muốn xóa người dùng này không?")) {
+      try {
+        await deleteUser(userId);
+        fetchUsers();
+        alert("Xóa người dùng thành công!");
+      } catch (error) {
+        console.error('Lỗi khi xóa người dùng:', error.message);
+        alert('Lỗi: ' + error.message);
+      }
     }
   };
 

@@ -26,19 +26,38 @@ int main() {
     return 0;
 }`;
 
-    const defaultPythonCode = `# Type your Python code here
-def main():
-    print("Hello, world!")
+    const defaultPythonCode = `def fibonacci_sum(n):
+    if n <= 0:
+        return 0
+    
+    # Khởi tạo các giá trị ban đầu của dãy Fibonacci
+    a, b = 0, 1
+    total_sum = 0
+    
+    # Tính tổng của dãy Fibonacci
+    for _ in range(n):
+        total_sum += a
+        a, b = b, a + b
+        
+    return total_sum
 
-if __name__ == "__main__":
-    main()`;
+# Lấy giá trị từ bàn phím
+try:
+    n = int(input("Nhập số phần tử n của dãy Fibonacci: "))
+    if n < 0:
+        raise ValueError("Số phần tử không thể là số âm.")
+    print(f"Tổng của các số Fibonacci từ phần tử thứ 1 đến phần tử thứ {n} là: {fibonacci_sum(n)}")
+except ValueError as e:
+    print(f"Đã xảy ra lỗi: {e}")
+`;
 
     const [language, setLanguage] = useState('cpp');
     const [code, setCode] = useState(defaultCppCode);
-    const [output, setOutput] = useState('');
+    const [output, setOutput] = useState([]);
     const [testCases, setTestCases] = useState(['']);
     const [numTestCases, setNumTestCases] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const[message,setMessage]=useState('')
 
     useEffect(() => {
         if (language === 'cpp') {
@@ -80,25 +99,39 @@ if __name__ == "__main__":
 
     const handleSubmit = async () => {
         try {
-
             setIsSubmitting(true);
-            setOutput("Đang xử lý...");
-            console.log(code,language,testCases);
-            const response = await runcodeUser(code,language,testCases);
-           
-            setOutput(response.output);
-            console.log('response:',response);
+            setMessage("Đang xử lý...");
+            console.log(code, language, testCases);
+    
+            // Gọi API runcodeUser
+            const response = await runcodeUser(code, language, testCases);
+            setOutput(response.runInfo.data);
+            // const runData = response.runInfo.data;
+            // console.log(runData);
+            // if (runData.status) {
+            //     // Trường hợp thực thi thành công
+            //     console.log(runData)
+            //     setOutput(runData.runInfo); // Lưu danh sách kết quả các test case
+            //     console.log('chinh xac',output);
+            // } else {
+            //     // Trường hợp gặp lỗi
+            //     setOutput([{ status: false, runInfo: runData.runInfo }]);
+            //     console.log('sai',output);
+            // }
+    
+            // console.log('response:', response);
         } catch (error) {
             console.error("Lỗi:", error);
-            setOutput("Đã xảy ra lỗi khi chạy mã.");
-        }finally {
+            setMessage("Đã xảy ra lỗi khi chạy mã.");
+        } finally {
             setIsSubmitting(false);
         }
     };
+    
 
     const handleRun = () => {
         console.log('Đang chạy mã:', code);
-        setOutput('Hello, world!');
+        setMessage('Hello, world!');
     };
 
     return (
@@ -182,7 +215,56 @@ if __name__ == "__main__":
                 </div>
                 <div className="mt-8 bg-white dark:bg-boxdark p-6 rounded-lg shadow-lg">
                     <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-bodydark">Kết quả:</h2>
-                    <pre className="bg-gray-100 dark:bg-boxdark-2 p-4 rounded-lg overflow-x-auto text-black dark:text-bodydark">{output}</pre>
+                    <div className="overflow-x-auto">
+                    <table className="w-full table-auto">
+  <thead>
+    <tr className="bg-gray-200 dark:bg-boxdark-2 text-left">
+      <th className="py-2 px-4 font-medium text-black dark:text-white">Test Case</th>
+      <th className="py-2 px-4 font-medium text-black dark:text-white">Input</th>
+      <th className="py-2 px-4 font-medium text-black dark:text-white">Output</th>
+      <th className="py-2 px-4 font-medium text-black dark:text-white">Thời gian thực hiện</th>
+      <th className="py-2 px-4 font-medium text-black dark:text-white">Bộ nhớ sử dụng</th>
+    </tr>
+  </thead>
+  <tbody>
+    {output ? (
+        // Kiểm tra nếu `output` tồn tại
+        output.status ? (
+            // Nếu status là true, hiển thị các trường hợp kiểm thử
+            output.runInfo.map((testCase, testCaseIndex) => (
+                <tr key={testCaseIndex} className="border-b border-gray-200 dark:border-boxdark-2">
+                   
+                        <td  className="py-2 px-4 text-gray-700 dark:text-gray-400">
+                            Test Case {testCaseIndex+1}
+                        </td>
+                    
+                    <td className="py-2 px-4 text-gray-700 dark:text-gray-400">{testCase.input}</td>
+                    <td className="py-2 px-4 text-gray-700 dark:text-gray-400">{testCase.stdout}</td>
+                    <td className="py-2 px-4 text-gray-700 dark:text-gray-400">{testCase.timeExecute} ms</td>
+                    <td className="py-2 px-4 text-gray-700 dark:text-gray-400">{testCase.totalUsageMemory} MB</td>
+                </tr>
+            ))
+        ) : (
+            // Nếu status là false, hiển thị thông tin lỗi
+            <tr>
+                <td colSpan="5" className="py-2 px-4 text-red-500 dark:text-red-400">
+                    {output.runInfo}
+                </td>
+            </tr>
+        )
+    ) : (
+        // Nếu không có dữ liệu nào để hiển thị
+        <tr>
+            <td colSpan="5" className="py-2 px-4 text-gray-700 dark:text-gray-400 text-center">
+                {message}
+            </td>
+        </tr>
+    )}
+</tbody>
+
+</table>
+
+                    </div>
                 </div>
             </div>
         </div>

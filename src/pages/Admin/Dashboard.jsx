@@ -1,98 +1,82 @@
-import {getInfo} from "../../services/admin/defaultApi"
-import { useEffect, useState } from "react";
-import { HiOutlineUserGroup } from "react-icons/hi";
-import { HiOutlineTerminal } from "react-icons/hi";
-import { HiOutlineThumbUp } from "react-icons/hi";
-import { HiOutlineNewspaper } from "react-icons/hi";
+// Dashboard.jsx
 const Dashboard = () => {
-  const[data,setdata]=useState("");
-  useEffect(() => {
-    
-    const fetchData = async () => {
-      try {
-        const result = await getInfo();
-
-        console.log("Result from API:", result);
-      setdata(result);
-        // Check the current state of the component
-    
-      
-      } catch (error) {
-        console.error("Error fetching product details:", error);
-      }
-    };
-    fetchData();
-  }, []);
   return (
-    <div className="flex flex-row h-full">
-      <div className="w-[280px] h-[200px] m-2  border-4 border-gray-400/50 rounded-lg ">
-        <div className="flex flex-row justify-between">
-          <div className="m-4">
-            <div className="font-bold text-xl">Người dùng</div>
-            <div className="text-gray-400"> (toàn bộ) </div>
-          </div>
-          <div className="m-4">
-          <HiOutlineUserGroup className="w-20 h-20 text-green-500" />
-            
-          </div>
-        </div>
-        <div className=" m-4 font-bold">
-          <span className="font-bold text-2xl">2/5</span>
-          <span className=" text-xl text-gray-500"> admin/user</span>
-        </div>
-      </div>
-      <div className="w-[280px] h-[200px] m-2  border-4 border-gray-400/50 rounded-lg ">
-        <div className="flex flex-row justify-between">
-          <div className="m-4">
-            <div className="font-bold text-xl text-gray-600">
-               Problem
-            </div>
-            <div className="text-gray-400"> toàn bộ </div>
-          </div>
-          <div className="m-4">
-          <HiOutlineTerminal className="w-20 h-20 text-red-500"/>
-           
-          </div>
-        </div>
-        <div className="m-4 font-bold">
-          <span className="font-bold text-2xl">{0} </span>
-          <span className=" text-xl text-gray-500"> đơn hàng</span>
-        </div>
-      </div>
-      <div className="w-[280px] h-[200px] m-2  border-4 border-gray-400/50 rounded-lg ">
-        <div className="flex flex-row justify-between">
-          <div className="m-4">
-            <div className="font-bold text-xl"> Bài nộp </div>
-            <div className="text-gray-400">trong tháng</div>
-          </div>
-          <div className="m-4">
-          <HiOutlineNewspaper className="w-20 h-20 text-yellow-500" />
-          
-          </div>
-        </div>
-        <div className="m-4 font-bold">
-          <span className="font-bold text-2xl">{0}</span>
-          <span className=" text-xl text-gray-500"> khách hàng</span>
-        </div>
-      </div>
-      <div className="w-[280px] h-[200px] m-2  border-4 border-gray-400/50 rounded-lg ">
-        <div className="flex flex-row justify-between">
-          <div className="m-4">
-            <div className="font-bold text-xl">Kết quả </div>
-            <div className="text-gray-400"> trong tháng </div>
-          </div>
-          <div className="m-4">
-          <HiOutlineThumbUp  className="w-20 h-20 text-blue-500"/>
-           
-          </div>
-        </div>
-        <div className="m-4 font-bold">
-          <span className="font-bold text-2xl">2/5</span>
-          <span className=" text-xl text-gray-500"> qua /tổng</span>
-         
-        </div>
-      </div>
+    <div className="max-w-4xl mx-auto p-6 bg-gray-50 shadow-lg rounded-lg">
+      <h1 className="text-3xl font-bold text-center mb-8">Cấu trúc thông tin trang web</h1>
+      
+      {/* Trang User */}
+      <section className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Trang User</h2>
+        <ul className="list-disc ml-6 space-y-2">
+          <li className="font-medium">Tìm kiếm User
+            <ul className="list-disc ml-6">
+              <li>Tìm kiếm theo số điện thoại, email, username</li>
+            </ul>
+          </li>
+          <li className="font-medium">Xem User
+            <ul className="list-disc ml-6">
+              <li>Xem thông tin cá nhân</li>
+              <li>Đặt lại mật khẩu</li>
+              <li>Xem nhóm
+                <ul className="list-disc ml-6">
+                  <li>Xóa nhóm</li>
+                </ul>
+              </li>
+              <li>Xem bài nộp
+                <ul className="list-disc ml-6">
+                  <li>Xem chi tiết bài nộp</li>
+                  <li>Xóa bài nộp</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li className="font-medium">Xóa User</li>
+        </ul>
+      </section>
+
+      {/* Trang Problem */}
+      <section className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Trang Problem</h2>
+        <ul className="list-disc ml-6 space-y-2">
+          <li className="font-medium">Tìm kiếm Problem</li>
+          <li className="font-medium">Xem Problem
+            <ul className="list-disc ml-6">
+              <li>Xem thông tin mô tả</li>
+              <li>Xem thông tin code theo ngôn ngữ</li>
+              <li>Xem thông tin testcase</li>
+              <li>Xem thông tin submit</li>
+            </ul>
+          </li>
+          <li className="font-medium">Xóa Problem</li>
+        </ul>
+      </section>
+
+      {/* Trang Nhóm */}
+      <section className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Trang Nhóm</h2>
+        <ul className="list-disc ml-6 space-y-2">
+          <li className="font-medium">Tạo nhóm</li>
+          <li className="font-medium">Xem nhóm
+            <ul className="list-disc ml-6">
+              <li>Xem thông tin</li>
+              <li>Xem thành viên</li>
+              <li>Xem bài tập</li>
+            </ul>
+          </li>
+          <li className="font-medium">Xóa nhóm</li>
+        </ul>
+      </section>
+
+      {/* Trang Bài nộp */}
+      <section className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Trang Bài Nộp</h2>
+        <ul className="list-disc ml-6 space-y-2">
+          <li className="font-medium">Danh sách bài nộp</li>
+          <li className="font-medium">Xem chi tiết bài nộp</li>
+        </ul>
+      </section>
     </div>
   );
 };
+
 export default Dashboard;

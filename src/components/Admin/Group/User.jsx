@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUsersInGroup, removeUserFromGroup, getUsersWithGroupStatus, addUserToGroup } from '../../../services/admin/GroupApi';
-
+import { BsFillTrashFill} from "react-icons/bs";
+import { FaEye } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 const GroupUsers = () => {
   const { id } = useParams();
   const [users, setUsers] = useState([]);
@@ -16,7 +18,7 @@ const GroupUsers = () => {
   const [popupCurrentPage, setPopupCurrentPage] = useState(1);
   const [popupTotalPages, setPopupTotalPages] = useState(1);
   const [popupTotalUsers, setPopupTotalUsers] = useState(0);
-
+  const [searchTerm,setSearchTerm]=useState('');
   useEffect(() => {
     fetchUsers();
   }, [id, currentPage]);
@@ -24,7 +26,7 @@ const GroupUsers = () => {
   
   useEffect(() => {
     fetchPopupUsers();
-  }, [popupCurrentPage]);
+  }, [popupCurrentPage,searchTerm]);
 
   
 
@@ -43,12 +45,14 @@ const GroupUsers = () => {
   };
 
   const handleRemoveUser = async (userId) => {
-    try {
-      await removeUserFromGroup(userId, id);
-      fetchUsers();
-      fetchPopupUsers();
-    } catch (error) {
-      setError(`Lỗi khi xóa người dùng khỏi nhóm: ${error.message}`);
+    if (window.confirm('Bạn có chắc chắn muốn xóa người dùng này khỏi nhóm?')) {
+      try {
+        await removeUserFromGroup(userId, id);
+        fetchUsers();
+        fetchPopupUsers();
+      } catch (error) {
+        setError(`Lỗi khi xóa người dùng khỏi nhóm: ${error.message}`);
+      }
     }
   };
 
@@ -64,7 +68,7 @@ const GroupUsers = () => {
 
   const fetchPopupUsers = async () => {
     try {
-      const response = await getUsersWithGroupStatus(id, popupCurrentPage, searchKeyword);
+      const response = await getUsersWithGroupStatus(id, popupCurrentPage, searchTerm);
       setPopupUsers(response.users);
       setPopupCurrentPage(parseInt(response.currentPage));
       setPopupTotalPages(response.totalPages);
@@ -76,7 +80,7 @@ const GroupUsers = () => {
 
   const handleSearch = () => {
     setPopupCurrentPage(1);
-    fetchPopupUsers();
+    setSearchTerm(searchKeyword)
   };
 
   if (loading) return <div className="text-center mt-8">Đang tải...</div>;
@@ -113,12 +117,22 @@ const GroupUsers = () => {
                 <td className="py-2 px-4 border-b">{user.phone}</td>
                 <td className="py-2 px-4 border-b">{user.email}</td>
                 <td className="py-2 px-4 border-b">
-                  <button
-                    onClick={() => handleRemoveUser(user.user_id)}
-                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                  >
-                    Xóa
-                  </button>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <span className="actions flex grid-cols-2 gap-4">
+                        <BsFillTrashFill
+                          className="delete-btn cursor-pointer"
+                          onClick={() => handleRemoveUser(user.user_id)}
+                        />
+                          {/* <Link to={`/admin/user/updateuser/${row.user_id}`} className="edit-btn cursor-pointer">
+                          <BsFillPencilFill />
+                         </Link> */ }  
+                        <Link to={`/admin/submit/detail/${user.submit_id}`} className="detail-btn cursor-pointer">
+                          <FaEye />
+                        </Link>
+                      </span>
+                    </td>
+
+                 
                 </td>
               </tr>
             ))}

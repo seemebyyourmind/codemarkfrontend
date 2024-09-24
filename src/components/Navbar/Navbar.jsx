@@ -4,37 +4,37 @@ import { useSelector } from "react-redux";
 
 import { useState } from "react";
 import UserPopUp from "../Popup/UserPopup";
-import CartPopup from "../Popup/CartPopup";
-import NotificationPopup from "../Popup/NotificationPopup";
-import { selectCart } from "../../features/cart/cartSlice";
+// import CartPopup from "../Popup/CartPopup";
+// import NotificationPopup from "../Popup/NotificationPopup";
+// import { selectCart } from "../../features/cart/cartSlice";
 
 import { selectAuth } from "../../features/auth/authSlice";
 
 export default function Navbar() {
-  const { petItems, stuffItems } = useSelector(selectCart);
-  const totalItems = petItems.length + stuffItems.length;
+  // const { petItems, stuffItems } = useSelector(selectCart);
+  // const totalItems = petItems.length + stuffItems.length;
 
-  const [isNotificationPopupOpen, setNotificationPopupOpen] = useState(false);
-  const [isCartPopupOpen, setCartPopupOpen] = useState(false);
+  // const [isNotificationPopupOpen, setNotificationPopupOpen] = useState(false);
+  // const [isCartPopupOpen, setCartPopupOpen] = useState(false);
   const [isUserPopupOpen, setUserPopupOpen] = useState(false);
 
   const { isLoggedIn } = useSelector(selectAuth);
 
-  const handleNotificationMouseEnter = () => {
-    setNotificationPopupOpen(true);
-  };
+  // const handleNotificationMouseEnter = () => {
+  //   setNotificationPopupOpen(true);
+  // };
 
-  const handleNotificationMouseLeave = () => {
-    setNotificationPopupOpen(false);
-  };
+  // const handleNotificationMouseLeave = () => {
+  //   setNotificationPopupOpen(false);
+  // };
 
-  const handleCartMouseEnter = () => {
-    setCartPopupOpen(true);
-  };
+  // const handleCartMouseEnter = () => {
+  //   setCartPopupOpen(true);
+  // };
 
-  const handleCartMouseLeave = () => {
-    setCartPopupOpen(false);
-  };
+  // const handleCartMouseLeave = () => {
+  //   setCartPopupOpen(false);
+  // };
   const handleUserMouseEnter = () => {
     setUserPopupOpen(true);
   };
@@ -51,7 +51,7 @@ export default function Navbar() {
       </div>
 
       <div className=" search self-center w-1/2 flex flex-row ">
-        <form className="flex items-center w-full mx-3 ">
+        {/* <form className="flex items-center w-full mx-3 ">
           <label htmlFor="search-dropdown" className="sr-only">
             Search
           </label>
@@ -98,7 +98,7 @@ export default function Navbar() {
             </svg>{" "}
             <h3 className="pl-2">Tìm</h3>
           </button>
-        </form>
+        </form> */}
       </div>
       <div className="w-[30%] flex flex-row justify-around self-center font-medium">
         {isLoggedIn ? (
@@ -149,7 +149,7 @@ export default function Navbar() {
           </Link>
         )}
 
-        <Link
+        {/* <Link
           to="/cart"
           className="relative text-xs hover:bg-orange-400 px-3 py-1 rounded-md hover:text-white"
           onMouseEnter={handleNotificationMouseEnter}
@@ -169,9 +169,9 @@ export default function Navbar() {
           </svg>
           Thông báo
           {isNotificationPopupOpen && <NotificationPopup />}
-        </Link>
+        </Link> */}
 
-        <Link
+        {/* <Link
           to={"/orderpage"}
           onMouseEnter={handleCartMouseEnter}
           onMouseLeave={handleCartMouseLeave}
@@ -188,7 +188,7 @@ export default function Navbar() {
           Giỏ hàng
           <span className="text-lg text-orange-400 hover:text-white ">{`(${totalItems})`}</span>
           {isCartPopupOpen && <CartPopup />}
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

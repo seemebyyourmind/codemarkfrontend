@@ -33,7 +33,7 @@ const Problem = () => {
     const fetchProblemDetails = async () => {
       try {
         const Problem = await getProblemInfo(id);
-        const response = await getSubmitsByUserAndProblem(2, 6, currentPage);
+        const response = await getSubmitsByUserAndProblem(userId, id, currentPage);
         setSubmits(response.submits);
         setTotalPages(response.totalPages);
         setProblem(Problem.ProblemInfo[0]);
@@ -47,7 +47,7 @@ const Problem = () => {
   useEffect(() => {
     const fetchSubmits = async () => {
       try {
-        const response = await getSubmitsByUserAndProblem(2, 6, currentPage);
+        const response = await getSubmitsByUserAndProblem(userId, id, currentPage);
         console.log(response);
         setSubmits(response.submits);
         setTotalPages(response.totalPages);
@@ -57,7 +57,7 @@ const Problem = () => {
       }
     };
     fetchSubmits();
-  }, [currentPage]);
+  }, [currentPage,activeTab]);
 
   useEffect(() => {
     let timer;
@@ -101,7 +101,7 @@ const Problem = () => {
       setShowPopup(true);
 
       setCanSubmit(false);
-      setCountdown(120);
+      setCountdown(20);
     } catch (error) {
       console.error('Lỗi khi nộp bài:', error);
     }finally {
@@ -318,6 +318,8 @@ const Problem = () => {
                 <th className="py-2 px-4 border-b text-left">Ngôn ngữ</th>
                 <th className="py-2 px-4 border-b text-left">Thời gian</th>
                 <th className="py-2 px-4 border-b text-left">Bộ nhớ</th>
+                <th className="py-2 px-4 border-b text-left">Thời gian nộp</th>
+
               </tr>
             </thead>
             <tbody>
@@ -329,6 +331,7 @@ const Problem = () => {
                   <td className="py-2 px-4 border-b">{submit.language_name}</td>
                   <td className="py-2 px-4 border-b">{submit.timeExecute || 'N/A'}</td>
                   <td className="py-2 px-4 border-b">{submit.memoryUsage || 'N/A'}</td>
+                  <td className="py-2 px-4 border-b">{new Date(submit.submit_date).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>

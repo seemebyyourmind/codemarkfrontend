@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getSubmitsByProblemId } from '../../../services/admin/SubmitApi';
+import { getSubmitsByProblemId,deleteSubmit } from '../../../services/admin/SubmitApi';
 
+import { BsFillTrashFill} from "react-icons/bs";
+import { FaEye } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 const Submit = () => {
   const { id } = useParams();
   const [submits, setSubmits] = useState([]);
@@ -28,7 +31,16 @@ const Submit = () => {
       setLoading(false);
     }
   };
-
+  const handleDelete = async (submitId) => {
+    if (window.confirm('Bạn có chắc chắn muốn xóa submit này?')) {
+      try {
+        await deleteSubmit(submitId);
+        fetchSubmits();
+      } catch (err) {
+        setError('Có lỗi xảy ra khi xóa submit');
+      }
+    }
+  };
   if (loading) return <div className="text-center mt-8">Đang tải...</div>;
   if (error) return <div className="text-center mt-8 text-red-500">{error}</div>;
 
@@ -47,6 +59,9 @@ const Submit = () => {
               <th className="py-2 px-4 border-b text-left">Điểm</th>
               <th className="py-2 px-4 border-b text-left">Thời gian thực thi</th>
               <th className="py-2 px-4 border-b text-left">Bộ nhớ sử dụng</th>
+              <th className="py-2 px-4 border-b text-left">Time_submit</th>
+              <th className="py-2 px-4 border-b text-left">Action</th>
+
             </tr>
           </thead>
           <tbody>
@@ -60,6 +75,21 @@ const Submit = () => {
                 <td className="py-2 px-4 border-b">{submit.points}</td>
                 <td className="py-2 px-4 border-b">{submit.timeExecute}</td>
                 <td className="py-2 px-4 border-b">{submit.memoryUsage}</td>
+                <td className="py-2 px-4 border-b">{new Date(submit.submit_date).toLocaleString()}</td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <span className="actions flex grid-cols-2 gap-4">
+                        <BsFillTrashFill
+                          className="delete-btn cursor-pointer"
+                          onClick={() => handleDelete(submit.submit_id)}
+                        />
+                          {/* <Link to={`/admin/user/updateuser/${row.user_id}`} className="edit-btn cursor-pointer">
+                          <BsFillPencilFill />
+                         </Link> */ }  
+                        <Link to={`/admin/submit/detail/${submit.submit_id}`} className="detail-btn cursor-pointer">
+                          <FaEye />
+                        </Link>
+                      </span>
+                    </td>
               </tr>
             ))}
           </tbody>

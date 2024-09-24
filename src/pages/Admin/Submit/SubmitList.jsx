@@ -88,6 +88,8 @@ const SubmitList = () => {
             <th className="py-2 px-4 border-b text-left">Status</th>
             <th className="py-2 px-4 border-b text-left">Points</th>
             <th className="py-2 px-4 border-b text-left">Testcases</th>
+            <th className="py-2 px-4 border-b text-left">Thời gian</th>
+
             <th className="py-2 px-4 border-b text-left">Hành động</th>
           </tr>
         </thead>
@@ -100,6 +102,7 @@ const SubmitList = () => {
               <td className="py-2 px-4 border-b">{submit.status}</td>
               <td className="py-2 px-4 border-b">{submit.points}</td>
               <td className="py-2 px-4 border-b">{submit.numberTestcasePass}/{submit.numberTestcase}</td>
+              <td className="py-2 px-4 border-b">{new Date(submit.submit_date).toLocaleString()}</td>
               <td className="py-2 px-4 border-b">
                 <button onClick={() => handleView(submit.submit_id)} className="mr-2 text-blue-500">
                   <FaEye />

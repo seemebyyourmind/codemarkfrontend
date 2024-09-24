@@ -19,9 +19,9 @@ const SubNav = () => {
       <Link to="/group" className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ${isActive('/group')}`}>
         Nhóm
       </Link>
-      <Link to="/problem" className={`px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 ${isActive('/problem')}`}>
+      {/* <Link to="/problem" className={`px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 ${isActive('/problem')}`}>
         Bài tập
-      </Link>
+      </Link> */}
       <Link to="/submit" className={`px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 ${isActive('/submit')}`}>
         Nộp bài
       </Link>

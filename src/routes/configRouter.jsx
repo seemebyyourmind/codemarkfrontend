@@ -4,7 +4,7 @@ import PageTitle from "../components/PageTitle";
 import HomePage from "../pages/HomePage/HomePage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
-import ProductPage from "../pages/ProductPage/ProductPage";
+import IntroducePage from "../pages/ProductPage/ProductPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import SignupPage from "../pages/SignupPage/SignupPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
@@ -41,7 +41,10 @@ import InfoProblem from "../components/Admin/Problem/Info"
 import DetailProblem from "../components/Admin/Problem/Detail"
 import TestCaseProblem from "../components/Admin/Problem/TestCase"
 import SubmitProblem from "../components/Admin/Problem/Submit"
-
+import ProblemCategory from "../pages/Admin/Problem/ProblemCategory";
+import CategoryDetail from "../pages/Admin/Problem/CategoryDetail";
+import CategoryInfo from "../components/Admin/Category/Info";
+import CategoryProblems from "../components/Admin/Category/Problem";
 
 //group
 import GroupManager from "../pages/Admin/Group/GroupManager";
@@ -71,10 +74,10 @@ const router = createBrowserRouter([
     element: <HomePage />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <ProductPage /> },
+      { index: true, element: <IntroducePage /> },
       {
         path: "about",
-        element: <ProductPage />,
+        element: <IntroducePage />,
         errorElement: <ErrorPage />,
       },
       {
@@ -89,7 +92,7 @@ const router = createBrowserRouter([
       },
       {
         path: "submit",
-        element: <ProductPage />,
+        element: <IntroducePage />,
         errorElement: <ErrorPage />,
       },
       {
@@ -174,6 +177,28 @@ const router = createBrowserRouter([
               element: <ProblemAdd />,
               errorElement: <ErrorPage />,
              },
+             { path: "category", 
+              element: <ProblemCategory />,
+              errorElement: <ErrorPage />,
+             },
+             { path: "categorydetail/:id", 
+              element: <CategoryDetail/>,
+              errorElement: <ErrorPage />,
+              children:[
+                { index: true, element: <CategoryInfo />,errorElement: <ErrorPage />, },
+                
+                { path: "problems", 
+                  element: <CategoryProblems />,
+                  errorElement: <ErrorPage />,
+                  },
+                  { path: "info", 
+                    element: <CategoryInfo />,
+                    errorElement: <ErrorPage />,
+                    },
+                
+    
+              ]
+            },
             { path: "problemdetail/:id", 
                 element: <><PageTitle title="UserMagager|Detail |Admin"  /><ProblemDetail/></> ,
                 errorElement: <ErrorPage />,
@@ -257,6 +282,7 @@ const router = createBrowserRouter([
 
         ]
       },  
+      
     { path: "detail", 
       element: <SubmitDetail />,
       errorElement: <ErrorPage />,
@@ -265,6 +291,10 @@ const router = createBrowserRouter([
         element: <DashBoard />,
         errorElement: <ErrorPage />,
         },
+        { path: "profile", 
+          element: <Profile />,
+          errorElement: <ErrorPage />,
+          },
       
     ],
   },
