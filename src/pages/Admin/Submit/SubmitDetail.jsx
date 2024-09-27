@@ -43,9 +43,13 @@ const SubmitDetail = () => {
             <p><strong>Tiêu đề bài toán:</strong> {submitInfo.title}</p>
             <p><strong>Trạng thái:</strong> {submitInfo.status}</p>
             <p><strong>Điểm:</strong> {submitInfo.points}</p>
+            <p><strong>Thời gian nộp bài :</strong>{new Date(submitInfo.submit_date).toLocaleString()}</p>
+
+            
+
           </div>
           <div>
-            <p><strong>Số testcase đạt:</strong> {submitInfo.numberTestcasePass}/{submitInfo.numberTestcase}</p>
+            <p><strong>Số testcase đạt:</strong> {submitInfo.numberTestcasePass ? `${submitInfo.numberTestcasePass}/${submitInfo.numberTestcase}` : '___'}</p>
             <p><strong>Ngôn ngữ ID:</strong> {submitInfo.language_id}</p>
             <p><strong>Tên ngôn ngữ:</strong> {submitInfo.language_name}</p>
             <p><strong>Thời gian thực thi:</strong> {submitInfo.timeExecute} ms</p>

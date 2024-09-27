@@ -15,10 +15,11 @@ const SelectDifficulty = ({ list, name, onChange }) => {
 
   return (
     <div className='flex flex-wrap  '>
-        <div className='text-center '><label className="my-3 mx-1 block  text-black dark:text-white">
+        <div className='text-center '>
+          <label className="my-3 mx-1 block  text-black dark:text-white">
         {name}
-      </label>
-      </div>
+        </label>
+        </div>
       
 
       <div className="relative z-20 bg-white dark:bg-form-input">
@@ -61,7 +62,7 @@ const SelectDifficulty = ({ list, name, onChange }) => {
           }`}
         >
           <option value="all"  className="text-body dark:text-bodydark">
-          Tất cả các {name}
+          Tất cả
           </option>
           {list.map((item, index) => (
             <option key={index} value={item} className="text-body dark:text-bodydark">

@@ -6,7 +6,7 @@ const GroupDetail = () => {
     
     return (
         <>
-        <Breadcrumb pageName='Chi tiết nhóm' />
+        <Breadcrumb pageName={`Chi tiết nhóm${  JSON.stringify(import.meta.env)}`}/>
         <div className="flex flex-wrap gap-5 xl:gap-20">
             <Link
               to="./info"

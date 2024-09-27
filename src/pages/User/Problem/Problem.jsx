@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { getProblemInfo } from "../../../services/admin/ProblemApi";
 import { runAndSubmitCode } from '../../../services/runCodeApi';
 import { getSubmitsByUserAndProblem } from '../../../services/user/submitApi';
+import { FaEye } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import AceEditor from 'react-ace';
@@ -12,6 +14,7 @@ import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-monokai";
 
 const Problem = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('info');
   const [problem, setProblem] = useState(null);
@@ -82,7 +85,9 @@ const Problem = () => {
       quill.root.setAttribute('contenteditable', false);
     }
   }, [problem]);
-
+  const handleView = (submitId) => {
+    navigate(`/submitdetail/${submitId}`);
+  };
   const handleSubmit = async () => {
     if (!canSubmit) {
       alert(`Vui lòng đợi ${countdown} giây trước khi nộp bài lại.`);
@@ -319,6 +324,7 @@ const Problem = () => {
                 <th className="py-2 px-4 border-b text-left">Thời gian</th>
                 <th className="py-2 px-4 border-b text-left">Bộ nhớ</th>
                 <th className="py-2 px-4 border-b text-left">Thời gian nộp</th>
+                <th className="py-2 px-4 border-b text-left">Hành động</th>
 
               </tr>
             </thead>
@@ -332,6 +338,12 @@ const Problem = () => {
                   <td className="py-2 px-4 border-b">{submit.timeExecute || 'N/A'}</td>
                   <td className="py-2 px-4 border-b">{submit.memoryUsage || 'N/A'}</td>
                   <td className="py-2 px-4 border-b">{new Date(submit.submit_date).toLocaleString()}</td>
+                  <td className="py-2 px-4 border-b">
+                <button onClick={() => handleView(submit.submit_id)} className="mr-2 text-blue-500">
+                  <FaEye />
+                </button>
+               
+              </td>
                 </tr>
               ))}
             </tbody>

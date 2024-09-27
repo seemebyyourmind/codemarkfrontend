@@ -2,12 +2,15 @@ import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 
 import SelectDifficulty from '../../../components/Form/SelectDifficulty';
 import { useState, useEffect } from 'react';
-
+import { getCategories } from '../../../services/admin/CategoryApi';
 import { getProblemBySearch,deleteProblem } from '../../../services/admin/ProblemApi';
 import { BsFillTrashFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 const ProblemList=()=>{
+  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [categories, setCategories] = useState([]);
+
     const [selectedDifficulty, setSelectedDifficulty] = useState('');
   
     const [input, setInput] = useState('');
@@ -22,11 +25,24 @@ const ProblemList=()=>{
     // localStorage.setItem('selectedDifficulty', selectedDifficulty);
     // localStorage.setItem('input', input);
       fetchProblems();
-    }, [selectedDifficulty, currentPage, searchTerm]);
-  
+    }, [selectedDifficulty, currentPage, searchTerm,selectedCategory]);
+    useEffect(() => {
+      fetchCategories();
+   }, []);
+   
+   const fetchCategories = async () => {
+      try {
+         const response = await getCategories();
+         console.log(response);
+         setCategories(response.categories); // Cập nhật danh sách category
+         console.log(categories)
+      } catch (error) {
+         console.error('Error fetching categories:', error);
+      }
+   };
     const fetchProblems = async () => {
       try {
-        const response = await getProblemBySearch(selectedDifficulty, currentPage, input);
+        const response = await getProblemBySearch(selectedDifficulty, currentPage, input,selectedCategory);
         setProblem(response.problems.problems); // Cập nhật dữ liệu người dùng
         setCurrentPage(parseInt(response.problems.currentPage)); // Cập nhật trang hiện tại
         
@@ -41,6 +57,10 @@ const ProblemList=()=>{
   
     const handleOptionDifficulty = (value) => {
       setSelectedDifficulty(value);
+      setCurrentPage(1);
+    };
+    const handleOptionCategory = (e) => {
+      setSelectedCategory(e.target.value);
       setCurrentPage(1);
     };
   
@@ -116,8 +136,29 @@ const ProblemList=()=>{
             Tìm kiếm
           </button>
         </div>
-        <SelectDifficulty list={['hard', 'medium', 'easy']} name='difficulty' onChange={handleOptionDifficulty} />
-      </div>
+        <SelectDifficulty list={['hard', 'medium', 'easy']} name='Độ khó' onChange={handleOptionDifficulty} />
+        <div className='flex flex-wrap  '>
+        <div className='text-center '>
+          <label className="my-3 mx-1 block  text-black dark:text-white">
+       Phân loại
+        </label>
+        </div>
+   <select
+      value={selectedCategory}
+      onChange={handleOptionCategory}
+      className="mr-2 bg-white dark:bg-gray-700 text-black dark:text-white rounded-lg py-2 px-4"
+   >
+      <option key={0} value={0}>Tất cả Category</option>
+      {categories.map((category) => (
+         <option key={category.category_id} value={category.category_id}>
+            {category.name}
+         </option>
+      ))}
+   </select>
+   </div>
+       
+   </div>
+     
         
        
         <div className="max-w-full overflow-x-auto table-wrapper">

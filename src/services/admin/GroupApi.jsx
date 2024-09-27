@@ -34,10 +34,10 @@ export const getUsersInGroup = async (groupId, page) => {
   }
 };
 
-export const getProblemsInGroup = async (groupId, page) => {
+export const getProblemsInGroup = async (groupId, page,cate) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/group/getproblemsingroup?group_id=${groupId}&page=${page}`,
+      `http://localhost:3000/admin/group/getproblemsingroup?group_id=${groupId}&page=${page}&category=${cate}`,
       {
         method: "GET",
         headers: {

@@ -91,6 +91,11 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
+        path: "submitdetail/:id",
+        element: <SubmitDetail />,
+        errorElement: <ErrorPage />,
+      },
+      {
         path: "submit",
         element: <IntroducePage />,
         errorElement: <ErrorPage />,

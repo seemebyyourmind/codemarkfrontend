@@ -1,8 +1,8 @@
-export const getProblemBySearch = async (difficulty, page, search) => {
+export const getProblemBySearch = async (difficulty, page, search,cate) => {
   try {
-    console.log(`http://localhost:3000/admin/problem/getproblemsearch/?difficulty=${difficulty}&page=${page}?search=${search}`)
+    console.log(`http://localhost:3000/admin/problem/getproblemsearch/?difficulty=${difficulty}&page=${page}&search=${search}&category=${cate}`)
     const response = await fetch(
-      `http://localhost:3000/admin/problem/getproblemsearch/?difficulty=${difficulty}&page=${page}&search=${search}`,
+      `http://localhost:3000/admin/problem/getproblemsearch/?difficulty=${difficulty}&page=${page}&search=${search}&category=${cate}`,
       {
         method: "GET",
         headers: {

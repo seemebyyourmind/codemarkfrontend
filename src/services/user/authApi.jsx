@@ -1,5 +1,6 @@
 export const ResisterUser = async (username, phone, email, password) => {
   try {
+    
     const response = await fetch('http://localhost:3000/user/register', {
       method: 'POST',
       headers: {
@@ -16,15 +17,15 @@ export const ResisterUser = async (username, phone, email, password) => {
 
 export const LoginUser = async (username, password) => {
   try {
-    const phản_hồi = await fetch('http://localhost:3000/user/login', {
+    const response = await fetch('http://localhost:3000/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
     });
-    const response = await phản_hồi.json();
-    return response;
+    const data = await response.json();
+    return data;
   } catch (e) {
     throw new Error(`Lỗi khi đăng nhập: ${e}`);
   }
