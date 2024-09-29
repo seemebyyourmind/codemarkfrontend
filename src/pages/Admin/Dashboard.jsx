@@ -1,7 +1,10 @@
 // Dashboard.jsx
+import UserInfo from "../../components/Admin/User/UserInfo";
 const Dashboard = () => {
   return (
+  
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 shadow-lg rounded-lg">
+      <UserInfo/>
       <h1 className="text-3xl font-bold text-center mb-8">Cấu trúc thông tin trang web</h1>
       
       {/* Trang User */}

@@ -95,11 +95,7 @@ const router = createBrowserRouter([
         element: <SubmitDetail />,
         errorElement: <ErrorPage />,
       },
-      {
-        path: "submit",
-        element: <IntroducePage />,
-        errorElement: <ErrorPage />,
-      },
+      
       {
         path: "profile",
         element: <ProfilePage />,
@@ -113,7 +109,6 @@ const router = createBrowserRouter([
             path: "submit",
             element:  <Submit />,
           },
-        
         ],
       },
     ],

@@ -6,8 +6,8 @@ import { runAndSubmitCode } from '../../../services/runCodeApi';
 import { getSubmitsByUserAndProblem } from '../../../services/user/submitApi';
 import { FaEye } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 import AceEditor from 'react-ace';
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-c_cpp";
@@ -264,7 +264,7 @@ const Problem = () => {
                  <div>
                    <table className="w-full mb-4">
                      <thead>
-                       <tr>
+                       <tr> <th>Testcase</th>
                          <th>Thời gian chạy</th>
                          <th>Bộ nhớ sử dụng</th>
                          <th>Trạng thái</th>
@@ -275,6 +275,7 @@ const Problem = () => {
                      <tbody>
                        {submissionResult.runningInfo.data.runInfo.map((info, index) => (
                          <tr key={index}>
+                           <td>{index}</td>
                            <td>{info.timeExecute} ms</td>
                            <td>{info.totalUsageMemory} KB</td>
                            <td>{info.status}</td>
@@ -296,8 +297,11 @@ const Problem = () => {
                     <pre className="bg-red-100 p-4 rounded text-red-700">{submissionResult.runningInfo.data.runInfo}</pre>
                   </div>
                 )}
-                <button onClick={closePopup} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg">
+                <button onClick={closePopup} className="m-2 px-4 py-2 bg-blue-500 text-white rounded-lg">
                  Đóng
+                </button>
+                <button className="m-2 px-4 py-2 bg-green-500 text-white rounded-lg" onClick={() => handleView(submissionResult?.submitResult.submit_id)} >
+                 Xem kết quả
                 </button>
 
               </div></div>

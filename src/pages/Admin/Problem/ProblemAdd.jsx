@@ -1,8 +1,8 @@
 import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 import { useState, useEffect } from 'react';
 import { createProblem, getLanguages } from '../../../services/admin/ProblemApi';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

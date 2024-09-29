@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { selectAuth } from '../../../features/auth/authSlice';
 import { getProblemsInGroup } from '../../../services/admin/GroupApi';
 import { getCategories } from '../../../services/admin/CategoryApi';
-
+import Guess from '../../../components/Role/Guess';
+import People from '../../../components/Role/People';
 
 const Group = () => {
   const [selectedCategory, setSelectedCategory] = useState(0);
-const [categories, setCategories] = useState([]);
-
+  const [categories, setCategories] = useState([]);
   const { groups } = useSelector(selectAuth);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [problems, setProblems] = useState([]);
@@ -17,7 +17,7 @@ const [categories, setCategories] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalProblems, setTotalProblems] = useState(0);
   const navigate = useNavigate();
-
+  const role = useSelector((state) => state.auth.role);
   useEffect(() => {
     if (selectedGroup) {
       fetchProblems(selectedGroup.group_id, currentPage,selectedCategory);
@@ -57,7 +57,7 @@ const [categories, setCategories] = useState([]);
   const handleViewProblem = (problemId) => {
     navigate(`/problem/${problemId}`);
   };
-
+if (role==="user"){
   return (
     <div className="flex">
       <div className="w-1/4 pr-4">
@@ -181,7 +181,9 @@ const [categories, setCategories] = useState([]);
         )}
       </div>
     </div>
-  );
+  );}
+  else if(role==='guess') return(<Guess/>)
+    else return(<People/>)
 };
 
 export default Group;

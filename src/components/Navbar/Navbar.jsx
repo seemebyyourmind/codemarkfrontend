@@ -1,9 +1,15 @@
 import brand from "../../assets/petbrand.svg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+// Thay đổi đường dẫn này để phản ánh cấu trúc của dự án của bạn
+import { logout } from "../../features/auth/authSlice";
 
-import { useState } from "react";
-import UserPopUp from "../Popup/UserPopup";
+
+import { useNavigate } from "react-router-dom";
+
+
+
 // import CartPopup from "../Popup/CartPopup";
 // import NotificationPopup from "../Popup/NotificationPopup";
 // import { selectCart } from "../../features/cart/cartSlice";
@@ -16,8 +22,8 @@ export default function Navbar() {
 
   // const [isNotificationPopupOpen, setNotificationPopupOpen] = useState(false);
   // const [isCartPopupOpen, setCartPopupOpen] = useState(false);
-  const [isUserPopupOpen, setUserPopupOpen] = useState(false);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isLoggedIn } = useSelector(selectAuth);
 
   // const handleNotificationMouseEnter = () => {
@@ -35,19 +41,18 @@ export default function Navbar() {
   // const handleCartMouseLeave = () => {
   //   setCartPopupOpen(false);
   // };
-  const handleUserMouseEnter = () => {
-    setUserPopupOpen(true);
-  };
-
-  const handleUserMouseLeave = () => {
-    setUserPopupOpen(false);
+  const handleLogout = () => {
+    // Thực hiện các hành động cần thiết khi đăng xuất
+    dispatch(logout());
+  
+    navigate("./");
   };
 
   return (
     <div className="flex flex-row ">
       <div className="w-1/5 flex flex-row justify-center">
         <img src={brand} />
-        <h1 className="self-center">CodeHack</h1>
+        <h1 className="self-center">Code HUB</h1>
       </div>
 
       <div className=" search self-center w-1/2 flex flex-row ">
@@ -102,27 +107,33 @@ export default function Navbar() {
       </div>
       <div className="w-[30%] flex flex-row justify-around self-center font-medium">
         {isLoggedIn ? (
-          <Link
-            to={"/profile"}
-            onMouseEnter={handleUserMouseEnter}
-            onMouseLeave={handleUserMouseLeave}
-            className=" relative text-xs flex flex-row items-center  hover:bg-orange-400 hover:text-white px-3 py-1 rounded-md"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6 mx-auto"
+          <div className="flex flex-row items-center">
+            <Link
+              to={"/profile"}
+              className="relative text-xs flex flex-row items-center  hover:bg-orange-400 hover:text-white px-3 py-1 rounded-md"
             >
-              <path
-                fillRule="evenodd"
-                d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Cá nhân
-            {isUserPopupOpen && <UserPopUp />}
-          </Link>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-6 h-6 mx-auto"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Cá nhân
+            </Link>
+            <Link
+          to={"/"}
+         className="relative text-xs flex flex-row items-center  hover:bg-orange-400 hover:text-white px-3 py-1 rounded-md"
+          onClick={handleLogout}
+        >
+          Đăng xuất
+        </Link>
+          </div>
         ) : (
           <Link
             to={"/login"}
@@ -148,47 +159,6 @@ export default function Navbar() {
             </svg>
           </Link>
         )}
-
-        {/* <Link
-          to="/cart"
-          className="relative text-xs hover:bg-orange-400 px-3 py-1 rounded-md hover:text-white"
-          onMouseEnter={handleNotificationMouseEnter}
-          onMouseLeave={handleNotificationMouseLeave}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6 mx-auto"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.25 9a6.75 6.75 0 0 1 13.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 0 1-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 1 1-7.48 0 24.585 24.585 0 0 1-4.831-1.244.75.75 0 0 1-.298-1.205A8.217 8.217 0 0 0 5.25 9.75V9Zm4.502 8.9a2.25 2.25 0 1 0 4.496 0 25.057 25.057 0 0 1-4.496 0Z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Thông báo
-          {isNotificationPopupOpen && <NotificationPopup />}
-        </Link> */}
-
-        {/* <Link
-          to={"/orderpage"}
-          onMouseEnter={handleCartMouseEnter}
-          onMouseLeave={handleCartMouseLeave}
-          className="text-xs mr-4 relative hover:bg-orange-400 px-3 py-1 rounded-md hover:text-white"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6 mx-auto"
-          >
-            <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
-          </svg>
-          Giỏ hàng
-          <span className="text-lg text-orange-400 hover:text-white ">{`(${totalItems})`}</span>
-          {isCartPopupOpen && <CartPopup />}
-        </Link> */}
       </div>
     </div>
   );

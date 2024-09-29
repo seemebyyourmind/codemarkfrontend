@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    role: "guess",
+    role: "people",
     isLoggedIn: false,
     user: null,
     access_token: null,
@@ -27,7 +27,7 @@ const authSlice = createSlice({
       state.groups = action.payload.groups || []; // Cập nhật thông tin groups từ payload
     },
     logout: (state) => {
-      state.role = "guess";
+      state.role = "people";
       state.isLoggedIn = false;
       state.user = null;
       state.access_token = null;
