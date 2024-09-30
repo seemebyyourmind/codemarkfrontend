@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import Banner from "../../components//Banner/Banner";
-
+import Image from "../../assets/react.svg"
 const IntroductionPage = () => {
-  const codePlatformImageUrl = "src/assets/react.svg"; // Đường dẫn ảnh giới thiệu về CodeHub
+  // const codePlatformImageUrl = "src/assets/react.svg"; // Đường dẫn ảnh giới thiệu về CodeHub
   const platformDescription =
     "CodeHub là nền tảng học lập trình trực tuyến hiện đại, cung cấp các bài tập lập trình phong phú, hỗ trợ nhiều ngôn ngữ như Python, C++, và JavaScript. Với giao diện thân thiện và tính năng kiểm tra code tự động, CodeHub giúp bạn rèn luyện kỹ năng lập trình hiệu quả và nhanh chóng.";
 
@@ -10,7 +10,7 @@ const IntroductionPage = () => {
     <div>
       {/* Banner giới thiệu nền tảng */}
       <Banner
-        imageUrl={codePlatformImageUrl}
+        imageUrl={Image}
         description={platformDescription}
       />
 

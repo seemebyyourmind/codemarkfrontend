@@ -1,7 +1,7 @@
 export const getGroups = async (page) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/group/getgroups?page=${page}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/getgroups?page=${page}`,
       {
         method: "GET",
         headers: {
@@ -19,7 +19,7 @@ export const getGroups = async (page) => {
 export const getUsersInGroup = async (groupId, page) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/group/getusersingroup?group_id=${groupId}&page=${page}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/getusersingroup?group_id=${groupId}&page=${page}`,
       {
         method: "GET",
         headers: {
@@ -37,7 +37,7 @@ export const getUsersInGroup = async (groupId, page) => {
 export const getProblemsInGroup = async (groupId, page,cate) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/group/getproblemsingroup?group_id=${groupId}&page=${page}&category=${cate}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/getproblemsingroup?group_id=${groupId}&page=${page}&category=${cate}`,
       {
         method: "GET",
         headers: {
@@ -55,7 +55,7 @@ export const getProblemsInGroup = async (groupId, page,cate) => {
 export const createGroup = async (name, description) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/group/creategroup',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/creategroup`,
       {
         method: "POST",
         headers: {
@@ -74,7 +74,7 @@ export const createGroup = async (name, description) => {
 export const updateGroup = async (group_id, name, description) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/group/updategroup',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/updategroup`,
       {
         method: "PUT",
         headers: {
@@ -93,7 +93,7 @@ export const updateGroup = async (group_id, name, description) => {
 export const deleteGroup = async (groupId) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/group/deletegroup',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/deletegroup`,
       {
         method: "DELETE",
         headers: {
@@ -112,7 +112,7 @@ export const deleteGroup = async (groupId) => {
 export const addUserToGroup = async (userId, groupId) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/group/addusertogroup',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/addusertogroup`,
       {
         method: "POST",
         headers: {
@@ -131,7 +131,7 @@ export const addUserToGroup = async (userId, groupId) => {
 export const removeUserFromGroup = async (userId, groupId) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/group/removeuserfromgroup',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/removeuserfromgroup`,
       {
         method: "DELETE",
         headers: {
@@ -150,7 +150,7 @@ export const removeUserFromGroup = async (userId, groupId) => {
 export const addProblemToGroup = async (problemId, groupId) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/group/addproblemtogroup',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/addproblemtogroup`,
       {
         method: "POST",
         headers: {
@@ -169,7 +169,7 @@ export const addProblemToGroup = async (problemId, groupId) => {
 export const removeProblemFromGroup = async (problemId, groupId) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/group/removeproblemfromgroup',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/removeproblemfromgroup`,
       {
         method: "DELETE",
         headers: {
@@ -188,7 +188,7 @@ export const removeProblemFromGroup = async (problemId, groupId) => {
 export const getGroupInfo = async (groupId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/group/getgroupinfo?id=${groupId}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/getgroupinfo?id=${groupId}`,
       {
         method: "GET",
         headers: {
@@ -206,7 +206,7 @@ export const getGroupInfo = async (groupId) => {
 export const getUsersWithGroupStatus = async (groupId, page = 1, search = '') => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/group/getuserswithgroupstatus?id=${groupId}&page=${page}&search=${search}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/getuserswithgroupstatus?id=${groupId}&page=${page}&search=${search}`,
       {
         method: "GET",
         headers: {
@@ -224,7 +224,7 @@ export const getUsersWithGroupStatus = async (groupId, page = 1, search = '') =>
 export const getProblemsWithGroupStatus = async (groupId, page = 1, search = '') => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/group/getproblemswithgroupstatus?id=${groupId}&page=${page}&search=${search}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/group/getproblemswithgroupstatus?id=${groupId}&page=${page}&search=${search}`,
       {
         method: "GET",
         headers: {

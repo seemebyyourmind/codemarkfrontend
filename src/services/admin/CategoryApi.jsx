@@ -1,7 +1,7 @@
 export const getCategories = async (page) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/category/getcategories?page=${page}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/category/getcategories?page=${page}`,
       {
         method: "GET",
         headers: {
@@ -19,7 +19,7 @@ export const getCategories = async (page) => {
 export const createCategory = async (name, description) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/category/createcategory',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/category/createcategory`,
       {
         method: "POST",
         headers: {
@@ -38,7 +38,7 @@ export const createCategory = async (name, description) => {
 export const updateCategory = async (category_id, name, description) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/category/updatecategory',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/category/updatecategory`,
       {
         method: "PUT",
         headers: {
@@ -57,7 +57,7 @@ export const updateCategory = async (category_id, name, description) => {
 export const deleteCategory = async (categoryId) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/category/deletecategory',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/category/deletecategory`,
       {
         method: "DELETE",
         headers: {
@@ -76,7 +76,7 @@ export const deleteCategory = async (categoryId) => {
 export const addCategoryToProblem = async (problemId, categoryId) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/category/addcategorytoproblem',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/category/addcategorytoproblem`,
       {
         method: "POST",
         headers: {
@@ -95,7 +95,7 @@ export const addCategoryToProblem = async (problemId, categoryId) => {
 export const removeCategoryFromProblem = async (problemId, categoryId) => {
   try {
     const response = await fetch(
-      'http://localhost:3000/admin/category/removecategoryfromproblem',
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/category/removecategoryfromproblem`,
       {
         method: "DELETE",
         headers: {
@@ -113,7 +113,7 @@ export const removeCategoryFromProblem = async (problemId, categoryId) => {
 export const getCategoryInfo = async (categoryId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/category/getcategoryinfo?id=${categoryId}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/category/getcategoryinfo?id=${categoryId}`,
       {
         method: "GET",
         headers: {
@@ -130,7 +130,7 @@ export const getCategoryInfo = async (categoryId) => {
 export const getProblemsWithCategoryStatus = async (categoryId, page = 1, search = '') => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/category/getproblemswithcategorystatus?id=${categoryId}&page=${page}&search=${search}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/category/getproblemswithcategorystatus?id=${categoryId}&page=${page}&search=${search}`,
       {
         method: "GET",
         headers: {
@@ -147,7 +147,7 @@ export const getProblemsWithCategoryStatus = async (categoryId, page = 1, search
 export const getProblemsInCategory = async ( category_id, page) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/category/getproblemswithcategory?id=${category_id}&page=${page}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/category/getproblemswithcategory?id=${category_id}&page=${page}`,
       {
         method: "GET",
         headers: {

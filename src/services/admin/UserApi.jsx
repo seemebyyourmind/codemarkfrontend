@@ -23,7 +23,7 @@ export const updateUser = async (updatedUser) => {
 export const getUserByRole = async (role,page,search) => {
 
     try {
-      let url = `http://localhost:3000/admin/user/getuserbyrole/?role=${role}&page=${page}`;
+      let url =`${import.meta.env.VITE_REACT_APP_URL}/admin/user/getuserbyrole/?role=${role}&page=${page}`;
       if (search !== '') {
         url += `&search=${search}`;
       }
@@ -51,7 +51,7 @@ export const getUserByRole = async (role,page,search) => {
   export const getUsersInfo = async () => {
     try {
       const response = await fetch(
-        'http://localhost:3000/admin/user/usersinfo',
+       `${import.meta.env.VITE_REACT_APP_URL}/admin/user/usersinfo`,
         {
           method: "GET",
           headers: {
@@ -72,7 +72,7 @@ export const getUserByRole = async (role,page,search) => {
     try {
     
       const response = await fetch(
-        `http://localhost:3000/admin/user/userinfo?id=${id}`,
+       `${import.meta.env.VITE_REACT_APP_URL}/admin/user/userinfo?id=${id}`,
         {
           method: "GET",
           headers: {
@@ -91,7 +91,7 @@ export const getUserByRole = async (role,page,search) => {
   export const getUserGroup = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/admin/user/usergroup?id=${id}`,
+       `${import.meta.env.VITE_REACT_APP_URL}/admin/user/usergroup?id=${id}`,
         {
           method: "GET",
           headers: {
@@ -111,7 +111,7 @@ export const getUserByRole = async (role,page,search) => {
   export const deleteUser = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/admin/user/delete?id=${id}`,
+       `${import.meta.env.VITE_REACT_APP_URL}/admin/user/delete?id=${id}`,
         {
           method: "DELETE",
           headers: {
@@ -129,7 +129,7 @@ export const getUserByRole = async (role,page,search) => {
   export const setUserPassword = async (userId, newPassword) => {
     try {
       const response = await fetch(
-        'http://localhost:3000/admin/user/setpassword',
+       `${import.meta.env.VITE_REACT_APP_URL}/admin/user/setpassword`,
         {
           method: "PUT",
           headers: {
@@ -148,7 +148,7 @@ export const getUserByRole = async (role,page,search) => {
   export const deleteUserFromGroup = async (userId, groupId) => {
     try {
       const response = await fetch(
-        'http://localhost:3000/admin/user/deletefromgroup',
+       `${import.meta.env.VITE_REACT_APP_URL}/admin/user/deletefromgroup`,
         {
           method: "DELETE",
           headers: {
@@ -167,7 +167,7 @@ export const getUserByRole = async (role,page,search) => {
   export const getUserSubmits = async (userId, page) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/admin/user/submits?id=${userId}&page=${page}`,
+       `${import.meta.env.VITE_REACT_APP_URL}/admin/user/submits?id=${userId}&page=${page}`,
         {
           method: "GET",
           headers: {
@@ -185,7 +185,7 @@ export const getUserByRole = async (role,page,search) => {
     console.log("userId",userId,"rolke:",roleId)
     try {
       const response = await fetch(
-        'http://localhost:3000/admin/user/updaterole',
+       `${import.meta.env.VITE_REACT_APP_URL}/admin/user/updaterole`,
         {
           method: "PUT",
           headers: {
@@ -203,7 +203,7 @@ export const getUserByRole = async (role,page,search) => {
   export const getUserRoles = async () => {
     try {
       const response = await fetch(
-        'http://localhost:3000/admin/user/role',
+       `${import.meta.env.VITE_REACT_APP_URL}/admin/user/role`,
         {
           method: "GET",
           headers: {

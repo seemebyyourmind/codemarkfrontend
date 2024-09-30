@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ResisterUser } from "../../services/user/authApi";
-
+import dogImg from '../../assets/dog-img.jpg';
 const SignupPage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -43,7 +43,7 @@ const SignupPage = () => {
   return (
     <div className="bg-gray-200 min-h-screen flex items-center justify-center">
       <div className="bg-orange-100 p-8 rounded-lg shadow-md flex items-center">
-        <img className="w-1/2" src="./src/assets/dog-img.jpg" alt="ảnh chó" />
+        <img className="w-1/2" src={dogImg} alt="ảnh chó" />
         <div className="w-1/2 ml-8">
           <h2 className="text-3xl font-semibold mb-4">Đăng ký</h2>
           <form onSubmit={handleSubmit}>

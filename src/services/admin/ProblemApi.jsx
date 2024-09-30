@@ -2,7 +2,7 @@ export const getProblemBySearch = async (difficulty, page, search,cate) => {
   try {
     console.log(`http://localhost:3000/admin/problem/getproblemsearch/?difficulty=${difficulty}&page=${page}&search=${search}&category=${cate}`)
     const response = await fetch(
-      `http://localhost:3000/admin/problem/getproblemsearch/?difficulty=${difficulty}&page=${page}&search=${search}&category=${cate}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/getproblemsearch/?difficulty=${difficulty}&page=${page}&search=${search}&category=${cate}`,
       {
         method: "GET",
         headers: {
@@ -21,7 +21,7 @@ export const getProblemInfo = async (id) => {
   try {
     console.log(` http://localhost:3000/admin/problem/getprobleminfo?id=${id}`)
     const response = await fetch(
-      `http://localhost:3000/admin/problem/getprobleminfo?id=${id}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/getprobleminfo?id=${id}`,
       {
         method: "GET",
         headers: {
@@ -39,7 +39,7 @@ export const getProblemInfo = async (id) => {
 export const createTestcase = async (id, input, output) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/problem/createtestcase`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/createtestcase`,
       {
         method: "POST",
         headers: {
@@ -62,7 +62,7 @@ export const createTestcase = async (id, input, output) => {
 export const updateTestcase = async (testcase_id, input, output) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/problem/updatetestCase`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/updatetestCase`,
       {
         method: "PUT",
         headers: {
@@ -85,7 +85,7 @@ export const updateTestcase = async (testcase_id, input, output) => {
 export const deleteTestcase = async (testcase_id) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/problem/deleteTestCase`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/deleteTestCase`,
       {
         method: "DELETE",
         headers: {
@@ -106,7 +106,7 @@ export const deleteTestcase = async (testcase_id) => {
 export const deleteProblem = async (problemId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/problem/delete?id=${problemId}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/delete?id=${problemId}`,
       {
         method: "DELETE",
         headers: {
@@ -124,7 +124,7 @@ export const deleteProblem = async (problemId) => {
 export const updateProblemInfo = async (problemId, title, description, difficulty) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/problem/update`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/update`,
       {
         method: "PUT",
         headers: {
@@ -148,7 +148,7 @@ export const updateProblemInfo = async (problemId, title, description, difficult
 export const updateProblemDetail = async (problemId, languageId, sourceCode, timeEx, memory) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/problem/updatedetail`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/updatedetail`,
       {
         method: "PUT",
         headers: {
@@ -173,7 +173,7 @@ export const updateProblemDetail = async (problemId, languageId, sourceCode, tim
 export const getSubmitsByProblemId = async (problemId, page) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/problem/submits?id=${problemId}&page=${page}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/submits?id=${problemId}&page=${page}`,
       {
         method: "GET",
         headers: {
@@ -191,7 +191,7 @@ export const getSubmitsByProblemId = async (problemId, page) => {
 export const createProblem = async (problemData) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/problem/create`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/create`,
       {
         method: "POST",
         headers: {
@@ -210,7 +210,7 @@ export const createProblem = async (problemData) => {
 export const getLanguages = async () => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/problem/languages`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/problem/languages`,
       {
         method: "GET",
         headers: {

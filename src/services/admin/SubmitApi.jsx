@@ -1,7 +1,7 @@
 export const getSubmitsByUserId = async (userId, page) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/submit/getbyuserid?id=${userId}&page=${page}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/submit/getbyuserid?id=${userId}&page=${page}`,
       {
         method: "GET",
         headers: {
@@ -19,7 +19,7 @@ export const getSubmitsByUserId = async (userId, page) => {
 export const getSubmitsByProblemId = async (problemId, page) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/submit/getbyproblemid?id=${problemId}&page=${page}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/submit/getbyproblemid?id=${problemId}&page=${page}`,
       {
         method: "GET",
         headers: {
@@ -36,7 +36,7 @@ export const getSubmitsByProblemId = async (problemId, page) => {
 export const getAllSubmits = async (page, limit, sort) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/submit/getall?page=${page}&limit=${limit}&sort=${sort}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/submit/getall?page=${page}&limit=${limit}&sort=${sort}`,
       {
         method: "GET",
         headers: {
@@ -53,7 +53,7 @@ export const getAllSubmits = async (page, limit, sort) => {
 export const deleteSubmit = async (submitId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/submit/delete`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/submit/delete`,
       {
         method: "DELETE",
         headers: {
@@ -72,7 +72,7 @@ export const deleteSubmit = async (submitId) => {
 export const getSubmitById = async (submitId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/admin/submit/getbyid?id=${submitId}`,
+     `${import.meta.env.VITE_REACT_APP_URL}/admin/submit/getbyid?id=${submitId}`,
       {
         method: "GET",
         headers: {
