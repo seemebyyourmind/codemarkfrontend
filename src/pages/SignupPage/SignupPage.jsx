@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ResisterUser } from "../../services/user/authApi";
-import dogImg from '../../assets/dog-img.jpg';
+import dogImg from './dog-img.jpg';
 const SignupPage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");

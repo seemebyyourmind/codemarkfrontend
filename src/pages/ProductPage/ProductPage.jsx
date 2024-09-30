@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Banner from "../../components//Banner/Banner";
-import Image from "../../assets/react.svg"
+import Image from "./react.svg"
 const IntroductionPage = () => {
   // const codePlatformImageUrl = "src/assets/react.svg"; // Đường dẫn ảnh giới thiệu về CodeHub
   const platformDescription =
