@@ -8,7 +8,7 @@ export const runcodeUser = async (source_code, language, input) => {
 
         // In dữ liệu để kiểm tra
         console.log('Data to be sent:', requestData);
-      const response = await fetch('http://localhost:3000/api/code/runcode', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/api/code/runcode`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export const runAndSubmitCode = async (source, problemId, language,userId) => {
 
     console.log('Dữ liệu gửi đi:', requestData);
 
-    const response = await fetch('http://localhost:3000/api/code/runandsubmit', {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/api/code/runandsubmit`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

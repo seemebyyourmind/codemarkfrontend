@@ -1,7 +1,7 @@
 const getSubmitsByUserAndProblem = async (userId, problemId, page = 1, limit = 10) => {
   try {
-    console.log(`http://localhost:3000/admin/submit/getbyuserandproblem?user_id=${userId}&problem_id=${problemId}&page=${page}&limit=${limit}`);
-    const response = await fetch(`http://localhost:3000/admin/submit/getbyuserandproblem?user_id=${userId}&problem_id=${problemId}&page=${page}&limit=${limit}`, {
+   
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/admin/submit/getbyuserandproblem?user_id=${userId}&problem_id=${problemId}&page=${page}&limit=${limit}`, {
       
         method: 'GET',
       headers: {

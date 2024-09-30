@@ -1,6 +1,6 @@
 export const getUserGroups= async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/user/groups?id=${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/user/groups?id=${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

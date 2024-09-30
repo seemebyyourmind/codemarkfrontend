@@ -1,6 +1,6 @@
 export const SignUpApi = async (phone, password) => {
   try {
-    const response = await fetch("http://localhost:3001/api/user/signup", {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/api/user/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export const SignUpApi = async (phone, password) => {
 
 export const LoginApi = async (phone, password) => {
   try {
-    const response = await fetch("http://localhost:3001/api/user/login", {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/api/user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const LoginApi = async (phone, password) => {
 };
 export const updateUser = async (userInfo, id, access_token) => {
   try {
-    const response = await fetch("http://localhost:3001/api/user/update-user", {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/api/user/update-user`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export const updateUser = async (userInfo, id, access_token) => {
 
 export const getOrders = async (id, access_token) => {
   try {
-    const response = await fetch("http://localhost:3001/api/user/login", {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/api/user/login`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export const getOrders = async (id, access_token) => {
 
 export const Deleterders = async (id, access_token, order_id) => {
   try {
-    const response = await fetch("http://localhost:3001/api/user/login", {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/api/user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

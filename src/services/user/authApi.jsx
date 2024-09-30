@@ -1,7 +1,7 @@
 export const ResisterUser = async (username, phone, email, password) => {
   try {
     
-    const response = await fetch('http://localhost:3000/user/register', {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/user/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export const ResisterUser = async (username, phone, email, password) => {
 
 export const LoginUser = async (username, password) => {
   try {
-    const response = await fetch('http://localhost:3000/user/login', {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export const LoginUser = async (username, password) => {
 
 export const UpdateUserInfo = async (userId, phone, email) => {
   try {
-    const response = await fetch('http://localhost:3000/user/updateinfo', {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/user/updateinfo`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export const UpdateUserInfo = async (userId, phone, email) => {
 
 export const ChangePassword = async (userId, currentPassword, newPassword) => {
   try {
-    const response = await fetch('http://localhost:3000/user/changepassword', {
+    const response = await fetch(`${import.meta.env.VITE_REACT_APP_URL}/user/changepassword`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
