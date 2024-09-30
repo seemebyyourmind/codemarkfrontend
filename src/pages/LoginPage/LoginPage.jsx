@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { LoginUser } from "../../services/user/authApi";
 import { login } from "../../features/auth/authSlice";
-
+import dogImg from './dog-img.jpg';
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const LoginPage = () => {
       <div className="bg-orange-100 p-8 rounded-lg shadow-md flex items-center">
         <img
           className="w-1/2"
-          src="./src/assets/dog-img.jpg"
+          src={dogImg}
           alt="hoangpham"
         />
         <div className="w-1/2 ml-8">
